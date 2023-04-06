@@ -24,7 +24,7 @@ export default {
       loading: true,
     }
   },
-  async mounted() {
+  async created() {
     this.users = await data.getUsers$();
     this.loading = false;
   },

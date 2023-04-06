@@ -1,11 +1,9 @@
 <template>
   <h1 class="title">学生日程管理系统</h1>
-  <div class="info">
-    当前用户：{{ username }}<el-button @click="logout()">退出</el-button>
-    <br>
-    当前时间：{{ new Date().toLocaleString() }}
-  </div>
-  <Calendar class="small" :schedule="schedule" />
+  当前用户：{{ username }}<el-button @click="logout()">退出</el-button>
+  <br>
+  <TimeController @timeChange="timeChange" />
+  <Calendar class="small" :schedule="schedule" :now="now" />
 </template>
 
 <style scoped>
@@ -25,21 +23,27 @@
 <script lang="ts">
 import { Schedule } from '../../common/definitions';
 import Calendar from '../components/Calendar.vue'
+import TimeController from '../components/TimeController.vue'
 import data from '../services/data';
 export default {
   components: {
-    Calendar
+    Calendar,
+    TimeController,
   },
   data() {
     return {
       username: '',
-      schedule: null as Schedule | null
+      schedule: null as Schedule | null,
+      now: Date.now(),
     }
   },
   methods: {
     logout() {
       data.currentUser = null;
       this.$router.push('/login');
+    },
+    timeChange(time: number) {
+      this.now = time;
     }
   },
   async mounted() {

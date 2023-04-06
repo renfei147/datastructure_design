@@ -1,5 +1,5 @@
 <template>
-  <FullCalendar :options="calendarOptions" />
+  <FullCalendar ref="fullCalendar" :options="calendarOptions" />
 </template>
 
 <script lang="ts">
@@ -17,18 +17,35 @@ export default {
     FullCalendar
   },
   props: {
-    schedule: {
-      type: Object as PropType<Schedule | null>,
-      default: { courses: [] }
-    },
+    schedule: Object as PropType<Schedule | null>,
+    now: Number,
   },
   data() {
     return {
+      calendarOptions: {
+        plugins: [timeGridPlugin, dayGridPlugin, listPlugin],
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listDay,listWeek'
+        },
+        locales: [zhcnLocale],
+        locale: 'zh-cn',
+        allDaySlot: false,
+        aspectRatio: 1.5,
+      } as CalendarOptions
     }
   },
-  computed: {
-    calendarOptions(): CalendarOptions {
-      const events = [];
+  watch: {
+    schedule() {
+      let todayIndicatorEvent = {
+        start: this.now,
+        allDay: true,
+        display: 'background',
+        backgroundColor: 'rgba(255,220,40,0.5)'
+      }
+      const events: EventInput[] = [todayIndicatorEvent];
       if (this.schedule) {
         const date = dayToDate(this.schedule.firstDay);
         if (date.getDay() !== 1) throw new Error("Not Monday");
@@ -89,21 +106,19 @@ export default {
           });
         }
       }
-      return {
-        plugins: [timeGridPlugin, dayGridPlugin, listPlugin],
-        initialView: 'dayGridMonth',
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay,listDay,listWeek'
-        },
-        locales: [zhcnLocale],
-        locale: 'zh-cn',
-        allDaySlot: false,
-        events,
-        aspectRatio: 1.5,
+      this.calendarOptions.events = events;
+    },
+    now(now: number) {
+      let events: any = this.calendarOptions.events;
+      if (events && events[0]) {
+        events[0].start = now;
       }
     }
-  }
+  },
 }
 </script>
+<style>
+:root {
+  --fc-today-bg-color: rgba(0, 0, 0, 0) !important;
+}
+</style>
