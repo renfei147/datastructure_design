@@ -18,15 +18,29 @@ export default {
   },
   props: {
     schedule: Object as PropType<Schedule | null>,
-    now: Number,
+    now: { type: Number, default: Date.now },
   },
   data() {
+    const self = this;
     return {
       calendarOptions: {
         plugins: [timeGridPlugin, dayGridPlugin, listPlugin],
         initialView: 'dayGridMonth',
+        customButtons: {
+          myToday: {
+            text: '跳转到当天',
+            click: () => {
+              const api = (self.$refs.fullCalendar as InstanceType<typeof FullCalendar>).getApi();
+              api.gotoDate(self.now);
+            }
+          }
+        },
+        buttonText: {
+          listDay: '日列表',
+          listWeek: '周列表',
+        },
         headerToolbar: {
-          left: 'prev,next today',
+          left: 'prev,next myToday',
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay,listDay,listWeek'
         },

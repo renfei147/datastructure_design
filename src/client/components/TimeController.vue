@@ -1,10 +1,12 @@
 <template>
-  当前时间：{{ new Date(time).toLocaleString() }}
-  <el-button @click="toggle()">
+  当前时间：
+  <el-date-picker :modelValue="time" @update:modelValue="time = $event.getTime()" type="datetime" :clearable="false" />
+  <!-- {{ new Date(time).toLocaleString() }} -->
+  <el-button @click="toggle">
     {{ running ? '暂停' : '开始' }}
   </el-button>
-  <el-button>设置时间</el-button>
-  <el-button @click="fastForward()">快进一小时</el-button>
+  <!-- <el-button @click="setTime"> 设置时间 </el-button> -->
+  <el-button @click="fastForward">快进一小时</el-button>
 </template>
 
 <script lang="ts">
@@ -29,16 +31,25 @@ export default {
     },
     tick() {
       this.time += 60000;
-      this.$emit('timeChange', this.time);
     },
     fastForward() {
       this.time += 60000 * 60;
-      this.$emit('timeChange', this.time);
+    },
+    setTime() {
+
+    },
+    datePickerChange(e: Date) {
+      console.log(e);
+      this.time = e.getTime()
     }
   },
   mounted() {
-    this.$emit('timeChange', this.time);
     timer = window.setInterval(this.tick, 10000 / 60);
+  },
+  watch: {
+    time() {
+      this.$emit('timeChange', this.time);
+    }
   }
 }
 </script>
