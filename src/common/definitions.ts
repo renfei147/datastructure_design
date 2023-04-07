@@ -19,8 +19,8 @@ export interface OnlinePlace {
 
 export interface OfflinePlace {
     type: 'offline';
-    placeId: number;
-    placeDetail: string;
+    id: number;
+    detail: string;
 }
 
 export interface Course {
