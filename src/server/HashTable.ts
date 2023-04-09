@@ -1,11 +1,11 @@
-class HashTable<T = any>{
+export class HashTable<T = any>{
     private hashLength: number = 31;
     private hashNum: number = 0;// 表示存储元素数
     private indexStorage: [string, T][][] = [];//  用于存储数据，本哈希表采用链地址法解决地址冲突
 
     private getHash(id: string, Mod: number): number {
         const bas = 61;
-        const lenth = id.length;
+        const length = id.length;
         let hashCode = 0;
         for (let i = 0; i < length; i++) {
             hashCode = hashCode * bas + id.charCodeAt(i);
@@ -50,7 +50,7 @@ class HashTable<T = any>{
         }
         // 装填因子大于0.75时进行扩容
         const loadFactor = this.hashNum / this.hashLength;
-        if (loadFactor < 0.75) {
+        if (loadFactor > 0.75) {
             this.capacityChange(this.hashLength * 2);
         }
 
@@ -59,6 +59,7 @@ class HashTable<T = any>{
             elementList.push([key, value]);
             this.hashNum++;
         }
+
     }
 
     public delete(key: string): boolean {// 删除元素，若元素之前不存在，返回false
@@ -113,6 +114,7 @@ class HashTable<T = any>{
                 return targetElement[1];
             }
         }
+        
         //找不到返回未定义
         return undefined;
     }

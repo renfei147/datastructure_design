@@ -1,0 +1,43 @@
+{
+    "firstDay": {
+        "year": 2023,
+        "month": 3,
+        "day": 3
+    },
+    "courses": [
+        
+    ],
+    "activities": [
+        {
+            "id": "1",
+            "name": "练习喵喵叫",
+            "startTime": 13,
+            "repeat": {
+                "type": "weekly",
+                "weekday": 4,
+                "startWeek": 1,
+                "endWeek": 10
+            },
+            "placeInfo": {
+                "type": "online",
+                "link": "https://example.com"
+            }
+        }
+    ],
+    "tempworks": [
+        {
+            "id": "1",
+            "name": "一个临时事务",
+            "day": {
+                "year": 2023,
+                "month": 3,
+                "day": 6
+            },
+            "time": 10,
+            "placeInfo": {
+                "type": "online",
+                "link": "https://example.com"
+            }
+        }
+    ]
+}
