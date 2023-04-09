@@ -1,19 +1,66 @@
 <template>
-  <h1 class="title">学生日程管理系统</h1>
-  当前用户：{{ username }}
-  <el-button @click="logout()">退出</el-button>
-  <br>
-  当前时间：
-  {{ new Date(now).toLocaleString() }}
-  <el-button @click="toggleTimer">
-    {{ timerRunning ? '暂停' : '开始' }}
-  </el-button>
-  <el-button @click="nextHour">快进一小时</el-button>
-  <el-button @click="setTime"> 设置时间 </el-button>
-  <Calendar class="small" :events="scheduler?.events" :now="now" />
+  <el-menu class="header" mode="horizontal" default-active="1">
+    <el-icon>
+      <User />
+    </el-icon>
+    {{ username }}
+    <el-button text @click="logout">退出</el-button>
+    <div class="flex-grow"></div>
+    <el-menu-item class="menu-item" index="1" @click="activeTab = 'calendar'">日程表</el-menu-item>
+    <el-menu-item class="menu-item" index="2" @click="activeTab = 'management'">事务管理</el-menu-item>
+    <el-menu-item class="menu-item" index="3" @click="activeTab = 'map'">地图</el-menu-item>
+    <div class="flex-grow"></div>
+    <el-icon>
+      <Clock />
+    </el-icon>
+    {{ new Date(now).toLocaleString() }}
+    <el-button-group>
+      <el-button text @click="toggleTimer">
+        {{ timerRunning ? '暂停' : '开始' }}
+      </el-button>
+      <el-button text @click="nextHour">快进一小时</el-button>
+      <el-button text @click="setTime"> 设置时间 </el-button>
+    </el-button-group>
+  </el-menu>
+
+  <div class="container">
+    <div v-if="activeTab === 'calendar'">
+      <Calendar class="small" :events="scheduler?.events" :now="now" />
+    </div>
+    <div v-else-if="activeTab === 'management'">
+      <div style="display:flex; flex-">
+        <el-button type="primary">
+          <el-icon>
+            <Plus />
+          </el-icon>
+          添加
+        </el-button>
+        <el-input class="flex-grow" style="margin-left: 10px;" v-model="input" placeholder="查找">
+          <template #prefix>
+            <el-icon>
+              <Search />
+            </el-icon>
+          </template>
+        </el-input>
+      </div>
+      <el-table :data="tableData" stripe>
+        <el-table-column prop="type" label="类型" width="100" />
+        <el-table-column prop="name" label="名称" width="150" />
+        <el-table-column prop="time" label="时间" />
+        <el-table-column prop="place" label="地点" />
+        <el-table-column fixed="right" label="操作" width="120">
+          <el-button link type="primary">编辑</el-button>
+          <el-button link type="danger">删除</el-button>
+        </el-table-column>
+      </el-table>
+    </div>
+    <div v-else>
+      这是一张地图
+    </div>
+  </div>
 
   <el-dialog v-model="dialogVisible" title="设置时间" width="400px">
-    <el-date-picker class="date-picker" v-model="pickerDate" type="datetime" :clearable="false" />
+    <el-date-picker v-model="pickerDate" type="datetime" :clearable="false" />
     <template #footer>
       <el-button @click="dialogVisible = false">取消</el-button>
       <el-button type="primary" @click="confirmTimeChange">确认</el-button>
@@ -22,16 +69,33 @@
 </template>
 
 <style scoped>
+.container {
+  width: 65%;
+  margin: 0 auto;
+  padding-top: 60px;
+}
+
 .small {
   font-size: 80%;
 }
 
-.date-picker {
-  text-align: center;
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0px 20px;
+  width: 100%;
+  position: fixed;
+  background-color: #ffffff;
+  z-index: 100;
 }
 
-.title {
+.menu-item {
+  height: 45px;
+}
+
+.flex-grow {
   text-align: center;
+  flex-grow: 1;
 }
 
 .info {
@@ -40,23 +104,59 @@
 </style>
 
 <script lang="ts">
-import { ElMessageBox, Action, ElMessage } from 'element-plus';
+import { ElMessageBox } from 'element-plus';
 import Calendar from '../components/Calendar.vue'
 import { Alarm, Scheduler } from '../services/core';
 import data from '../services/data';
+import { User, Clock, Search, Plus } from '@element-plus/icons-vue'
+import { Schedule } from '../../common/definitions';
+import { dayToStr } from '../../common/day';
+
 export default {
   components: {
-    Calendar
+    Calendar,
+    User,
+    Clock,
+    Search,
+    Plus
   },
   data() {
     return {
       username: '',
+      schedule: null as Schedule | null,
       scheduler: null as Scheduler | null,
       now: Date.now(),
       pickerDate: new Date(),
       timer: 0,
       timerRunning: false,
       dialogVisible: false,
+      activeName: 'first',
+      activeTab: 'calendar' as ('calendar' | 'management' | 'map'),
+      input: '',
+    }
+  },
+  computed: {
+    tableData() {
+      if (!this.schedule) return [];
+      const result = [];
+      const localWeekday = ['一', '二', '三', '四', '五', '六', '日'];
+
+      for (const i of this.schedule.activities) {
+        result.push({
+          type: '课外活动',
+          name: i.name,
+          time: (i.repeat.type === 'once'
+            ? dayToStr(i.repeat.day)
+            : i.repeat.type === 'daily'
+              ? `${dayToStr(i.repeat.startDay)}-${dayToStr(i.repeat.endDay)}`
+              : `第${i.repeat.startWeek}周到第${i.repeat.endWeek}周 每周${localWeekday[i.repeat.weekday]}`)
+            + `${i.startTime}:00-${i.startTime + 1}:00`,
+          place: i.placeInfo.type === 'online'
+            ? `线上 ${i.placeInfo.link}`
+            : `${i.placeInfo.id}${i.placeInfo.detail}`,
+        })
+      }
+      return result;
     }
   },
   methods: {
@@ -108,8 +208,13 @@ export default {
       this.$router.replace('/login');
     } else {
       this.username = user.name;
-      const schedule = await data.getSchedule$();
-      this.scheduler = new Scheduler(schedule, this.now);
+      this.schedule = await data.getSchedule$();
+      this.scheduler = new Scheduler(this.schedule, this.now);
+      this.toggleTimer();
+    }
+  },
+  unmounted() {
+    if (this.timerRunning) {
       this.toggleTimer();
     }
   }

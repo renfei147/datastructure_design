@@ -24,7 +24,7 @@ export default {
     return {
       calendarOptions: {
         plugins: [timeGridPlugin, dayGridPlugin, listPlugin],
-        initialView: 'dayGridMonth',
+        initialView: 'timeGridWeek',
         customButtons: {
           myToday: {
             text: '跳转到当天',
@@ -51,25 +51,28 @@ export default {
     }
   },
   watch: {
-    events() {
-      let todayIndicatorEvent = {
-        start: this.now,
-        allDay: true,
-        display: 'background',
-        backgroundColor: 'rgba(255,220,40,0.5)',
-      }
-      const calendarEvents: EventInput[] = [todayIndicatorEvent];
-      if (this.events) {
-        for (const i of this.events) {
-          calendarEvents.push({
-            title: i.source.name,
-            start: i.start,
-            end: i.end,
-            backgroundColor: i.sourceType == 'course' ? undefined : (i.sourceType == 'activity' ? '#ff00aa' : '#55dd55'),
-          })
+    events: {
+      immediate: true,
+      handler() {
+        let todayIndicatorEvent = {
+          start: this.now,
+          allDay: true,
+          display: 'background',
+          backgroundColor: 'rgba(255,220,40,0.5)',
         }
+        const calendarEvents: EventInput[] = [todayIndicatorEvent];
+        if (this.events) {
+          for (const i of this.events) {
+            calendarEvents.push({
+              title: i.source.name,
+              start: i.start,
+              end: i.end,
+              backgroundColor: i.sourceType == 'course' ? undefined : (i.sourceType == 'activity' ? '#ff00aa' : '#55dd55'),
+            })
+          }
+        }
+        this.calendarOptions.events = calendarEvents;
       }
-      this.calendarOptions.events = calendarEvents;
     },
 
     now(now: number) {
