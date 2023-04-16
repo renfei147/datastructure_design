@@ -68,3 +68,9 @@ export interface Tempwork {
     time: number;//在这一小时内完成
     placeInfo: OnlinePlace | OfflinePlace;
 }
+
+export interface ShortestPath {
+    path:number[];//按index从小到大，是从起点到终点需要经过的点（包括起点和终点自身）
+    isAvilable:boolean;//如果为false，说明没有从起点到终点的路径
+    distance:number;//从起点到终点的距离
+}
