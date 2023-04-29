@@ -1,6 +1,6 @@
 import express from "express";
 import ViteExpress from "vite-express";
-import { Activity, Course, Schedule, User,Tempwork } from "../common/definitions";
+import { Activity, Course, Schedule, User, Tempwork } from "../common/definitions";
 import { HashTable } from "./HashTable";
 import { findShortestPath } from "./ShortestPath";
 import fse from "fs-extra";
@@ -14,16 +14,32 @@ const app = express();
 let users: User[];
 let schedule: Schedule;
 let withStudentsCourse: {
-  [key:string]:
+  [key: string]:
+  Course & { students: User[] } & { id: string }
+};
+let more_withStudentsCourse: {
+  [key: string]:
   Course & { students: User[] }
 };
+
+let com_withStudentsCourse: {
+  [key: string]:
+  {
+    command: "add" | "upd";
+    msg: Course & { students: User[] } ;
+    id: string
+  } | {
+    command: "del";
+    msg: string
+  }
+};
 let withStudentsActivity: {
-  [key:string]:
-  Activity&{students:User[]}
+  [key: string]:
+  Activity & { students: User[] }
 };
 let withStudentsTempwork: {
-  [key:string]:
-  Tempwork&{students:User[]}
+  [key: string]:
+  Tempwork & { students: User[] }
 };
 
 // let myHashTable = new HashTable();
@@ -42,11 +58,21 @@ fse.readJSON("src/server/schedule.json").then((data) => {
 
 fse.readJSON("src/server/users.json").then((data) => {
   users = data;
-  if(isAtPresent) users.splice(4, 5);
+  if (isAtPresent) users.splice(4, 5);
 });
 
 fse.readJSON("src/server/withStudentCourse.json").then((data) => {
   withStudentsCourse = data;
+}).then(() => {
+  fse.readJSON("src/server/com_withStudentCourse.json").then((data) => {
+    com_withStudentsCourse = data;
+  }).then(() => {
+    for (const [key, value] of Object.entries(com_withStudentsCourse)) {
+      if (value.command == "add") withStudentsCourse[value.id] = value.msg;
+      if (value.command == "del") delete withStudentsCourse[value.msg];
+      if (value.command == "upd") withStudentsCourse[value.id] = value.msg;
+    }
+  });
 });
 
 fse.readJSON("src/server/withStudentActivity.json").then((data) => {
@@ -77,52 +103,95 @@ app.get("/api/shortestPath", (req, res) => {
   })
 });
 
-/*
-app.post("/api/login", (req, res) => {
-  let user = req.body;
-  let result = users.find((u) => u.id == user.id);
-  if (result) {
-    res.send(result);
-  } else {
-    res.status(401).send("用户名或密码错误");
+app.post("/api/addcourse", (req, res) => {
+  let body = req.body;
+  let course = body.msg;
+  let nextID = 0;
+  for (const [key, value] of Object.entries(withStudentsCourse)) {
+    if (parseInt(key) > nextID) nextID = parseInt(key);
+    if (value.name == course.name) return res.status(401).send("already exist");
   }
+  nextID++;
+  console.log("nextID: " + nextID.toString());
+  com_withStudentsCourse[Object.keys(com_withStudentsCourse).length + 1] = {
+    command: "add",
+    msg: course,
+    id: nextID.toString()
+  };
+  withStudentsCourse[nextID.toString()] = course;
+  fse.writeJSON("src/server/com_withStudentCourse.json", com_withStudentsCourse);
+  res.send("success");
+  console.log(withStudentsCourse);
 });
-*/
+
+app.post("/api/delcourse", (req, res) => {
+  let body = req.body;
+  let result = false;
+  console.log(withStudentsCourse);
+  console.log("------");
+  if (body.msg in withStudentsCourse) {
+    delete withStudentsCourse[body.msg];
+    com_withStudentsCourse[Object.keys(com_withStudentsCourse).length + 1] = body;
+    result = true;
+    fse.writeJSON("src/server/com_withStudentCourse.json", com_withStudentsCourse);
+  }
+  if (result) {
+    res.send("success");
+  } else {
+    res.status(401).send("not exist");
+  }
+  console.log(withStudentsCourse);
+});
+
+app.post("/api/updcourse", (req, res) => {
+  let body = req.body;
+  let course = body.msg;
+  withStudentsCourse[body.msg.id] = course;
+  com_withStudentsCourse[Object.keys(com_withStudentsCourse).length + 1] = body;
+  fse.writeJSON("src/server/com_withStudentCourse.json", com_withStudentsCourse);
+  res.send("success");
+  console.log(withStudentsCourse);
+});
+
 
 ViteExpress.listen(app, 3000, () =>
   console.log("Server is listening on port 3000...")
 );
 
-/*----------以下是用到的工具函数----------*/ 
+/*----------以下是用到的工具函数----------*/
 
 //构造schedule
 function structSchedule(id: String): Schedule {
   let mySchedule = JSON.parse(JSON.stringify(schedule));
-  for(const [key,value] of Object.entries(withStudentsCourse)){
-    for(const student of value.students){
-      if(student.id == id){
-        if(isAtPresent && value.name.includes("喵喵")) continue;
+  for (const [key, value] of Object.entries(withStudentsCourse)) {
+    for (const student of value.students) {
+      if (student.id == id) {
+        if (isAtPresent && value.name.includes("喵喵")) continue;
+        value["id"] = key;
         mySchedule.courses.push(value);
       }
     }
   }
-  for(const [key,value] of Object.entries(withStudentsActivity)){
-    for(const student of value.students){
-      if(student.id == id){
-        if(isAtPresent && value.name.includes("喵喵")) continue;
+  for (const [key, value] of Object.entries(withStudentsActivity)) {
+    for (const student of value.students) {
+      if (student.id == id) {
+        if (isAtPresent && value.name.includes("喵喵")) continue;
+        value["id"] = key;
         mySchedule.activities.push(value);
-        console.log(JSON.stringify(value));
       }
     }
   }
-  for(const [key,value] of Object.entries(withStudentsTempwork)){
-    for(const student of value.students){
-      if(student.id == id){
-        if(isAtPresent && value.name.includes("喵喵")) continue;
+  for (const [key, value] of Object.entries(withStudentsTempwork)) {
+    for (const student of value.students) {
+      if (student.id == id) {
+        if (isAtPresent && value.name.includes("喵喵")) continue;
+        value["id"] = key;
         mySchedule.tempworks.push(value);
       }
     }
   }
+  // console.log(mySchedule);//检查schedule的格式是怎么样的
+  console.log(withStudentsCourse);
   return mySchedule;
 }
 
