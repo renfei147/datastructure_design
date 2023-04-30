@@ -113,6 +113,7 @@ app.post("/api/addcourse", (req, res) => {
   }
   nextID++;
   console.log("nextID: " + nextID.toString());
+  console.log(course);
   com_withStudentsCourse[Object.keys(com_withStudentsCourse).length + 1] = {
     command: "add",
     msg: course,
@@ -121,14 +122,11 @@ app.post("/api/addcourse", (req, res) => {
   withStudentsCourse[nextID.toString()] = course;
   fse.writeJSON("src/server/com_withStudentCourse.json", com_withStudentsCourse);
   res.send("success");
-  console.log(withStudentsCourse);
 });
 
 app.post("/api/delcourse", (req, res) => {
   let body = req.body;
   let result = false;
-  console.log(withStudentsCourse);
-  console.log("------");
   if (body.msg in withStudentsCourse) {
     delete withStudentsCourse[body.msg];
     com_withStudentsCourse[Object.keys(com_withStudentsCourse).length + 1] = body;
@@ -140,7 +138,6 @@ app.post("/api/delcourse", (req, res) => {
   } else {
     res.status(401).send("not exist");
   }
-  console.log(withStudentsCourse);
 });
 
 app.post("/api/updcourse", (req, res) => {
@@ -150,7 +147,6 @@ app.post("/api/updcourse", (req, res) => {
   com_withStudentsCourse[Object.keys(com_withStudentsCourse).length + 1] = body;
   fse.writeJSON("src/server/com_withStudentCourse.json", com_withStudentsCourse);
   res.send("success");
-  console.log(withStudentsCourse);
 });
 
 
@@ -191,7 +187,6 @@ function structSchedule(id: String): Schedule {
     }
   }
   // console.log(mySchedule);//检查schedule的格式是怎么样的
-  console.log(withStudentsCourse);
   return mySchedule;
 }
 
