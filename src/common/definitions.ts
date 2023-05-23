@@ -74,3 +74,8 @@ export interface ShortestPath {
     isAvilable:boolean;//如果为false，说明没有从起点到终点的路径
     distance:number;//从起点到终点的距离
 }
+export interface TSP{
+    path: number[];
+    isAvilable: boolean;//如果为false，说明没有这样的路径。
+    distance: number;
+}
