@@ -118,6 +118,35 @@ export class HashTable<T = any>{
         //找不到返回未定义
         return undefined;
     }
+    // To convert the hash table to JSON format, we can define a method called toJSON() that will return a JSON string representation of the hash table.
 
+    public toJSON(): string {
+        const jsonObj = {} as any;
+        for (let i = 0; i < this.indexStorage.length; i++) {
+            const elementList = this.indexStorage[i];
+            if (elementList) {
+                for (let j = 0; j < elementList.length; j++) {
+                    const key = elementList[j][0];
+                    const value = elementList[j][1];
+                    jsonObj[key] = value;
+                }
+            }
+        }
+        return JSON.stringify(jsonObj);
+    }
 
 }
+
+
+/*
+public static fromJSON<T>(json: string): HashTable<T> {
+  const jsonObj = JSON.parse(json);
+  const hashTable = new HashTable<T>();
+  for (const key in jsonObj) {
+    if (jsonObj.hasOwnProperty(key)) {
+      hashTable.put(key, jsonObj[key]);
+    }
+  }
+  return hashTable;
+}
+*/
