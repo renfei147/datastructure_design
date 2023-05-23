@@ -1,0 +1,29 @@
+{
+    "1": {
+        "name": "一个临时事务",
+        "day": {
+            "year": 2023,
+            "month": 3,
+            "day": 6
+        },
+        "time": 10,
+        "placeInfo": {
+            "type": "online",
+            "link": "https://example.com"
+        },
+        "students": [
+            {
+                "id": "1",
+                "name": "张三"
+            },
+            {
+                "id": "5",
+                "name": "太阳能rf"
+            },
+            {
+                "id": "4",
+                "name": "可爱软萌的猫娘女仆yya"
+            }
+        ]
+    }
+}

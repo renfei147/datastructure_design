@@ -1,4 +1,4 @@
-import { Schedule, User } from "../../common/definitions";
+import { Schedule, User,ShortestPath } from "../../common/definitions";
 
 export default {
     currentUser: null as User | null,
@@ -11,5 +11,8 @@ export default {
     },
     async getSchedule$(): Promise<Schedule> {
         return fetch(`/api/schedule?id=${this.getUserId()}`).then(res => res.json());
+    },
+    async getShortestPath$(start: number, end: number): Promise<ShortestPath> {
+        return fetch(`/api/shortestPath?start=${start}&end=${end}`).then(res => res.json());
     }
 }
