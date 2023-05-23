@@ -28,8 +28,8 @@
       <Calendar class="small" :events="scheduler?.events" :now="now" />
     </div>
     <div v-else-if="activeTab === 'management'">
-      <div style="display:flex; flex-">
-        <el-button type="primary">
+      <div style="display:flex;">
+        <el-button type="primary" @click="add">
           <el-icon>
             <Plus />
           </el-icon>
@@ -111,6 +111,7 @@ import data from '../services/data';
 import { User, Clock, Search, Plus } from '@element-plus/icons-vue'
 import { Schedule } from '../../common/definitions';
 import { dayToStr } from '../../common/day';
+import { dialogs } from '../services/dialogs'
 
 export default {
   components: {
@@ -118,7 +119,7 @@ export default {
     User,
     Clock,
     Search,
-    Plus
+    Plus,
   },
   data() {
     return {
@@ -140,7 +141,6 @@ export default {
       if (!this.schedule) return [];
       const result = [];
       const localWeekday = ['一', '二', '三', '四', '五', '六', '日'];
-
       for (const i of this.schedule.activities) {
         result.push({
           type: '课外活动',
@@ -200,6 +200,10 @@ export default {
       for (const i of alarms) {
         ElMessageBox.alert(i.description, '提醒')
       }
+    },
+    async add() {
+      const t = await dialogs.detailDialog?.open('activity', 'new');
+      console.log(t);
     }
   },
   async mounted() {
@@ -217,6 +221,6 @@ export default {
     if (this.timerRunning) {
       this.toggleTimer();
     }
-  }
+  },
 }
 </script>

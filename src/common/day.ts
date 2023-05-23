@@ -4,6 +4,14 @@ export interface Day {
     day: number;
 }
 
+export function dateToDay(day: Date): Day {
+    return {
+        year: day.getFullYear(),
+        month: day.getMonth(),
+        day: day.getDate()
+    }
+}
+
 export function dayToDate(day: Day) {
     return new Date(day.year, day.month, day.day);
 }

@@ -36,7 +36,7 @@ export interface Course {
         day: Day;
         startTime: number;
         duration: number;
-        place: number;
+        placeInfo: OnlinePlace | OfflinePlace;
     }
 }
 

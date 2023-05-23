@@ -5,7 +5,7 @@ import { HashTable } from "./HashTable";
 import fse from "fs-extra";
 let url = require("url");
 
-const isAtPresent = 1;
+const isAtPresent = false;
 
 const app = express();
 
@@ -30,7 +30,6 @@ fse.readJSON("src/server/schedule.json").then((data) => {
 
 fse.readJSON("src/server/users.json").then((data) => {
   users = data;
-  users.splice(4, 5);
 });
 
 fse.readJSON("src/server/withStudentCourse.json").then((data) => {
@@ -44,7 +43,6 @@ function structSchedule(id: String): Schedule {
   for(const [key,value] of Object.entries(withStudentsCourse)){
     for(const student of value.students){
       if(student.id == id){
-        if(isAtPresent && value.name == "喵喵叫小课堂") continue;
         mySchedule.courses.push(value);
       }
     }
