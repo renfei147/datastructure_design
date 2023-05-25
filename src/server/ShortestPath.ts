@@ -1,12 +1,7 @@
 import fse from "fs-extra";
 import { ShortestPath } from "../common/definitions";
+import { Location   } from "../common/definitions";
 
-interface Location {
-    id: number;
-    name: string;
-    address: [number, number];
-    connection: number[];
-}
 
 export async function findShortestPath(start:number,end:number):Promise<ShortestPath>{
     let locations: Location[] = [];

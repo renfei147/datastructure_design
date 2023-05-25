@@ -1,13 +1,7 @@
 import { promises } from "dns";
 import { tmpdir } from "os";
 import { ShortestPath } from "../common/definitions";
-
-interface Location {
-    id: number;
-    name: string;
-    address: [number, number];
-    connection: number[];
-}
+import { Location   } from "../common/definitions";        
 function calDistance(node1:Location,node2:Location):number{
     // console.log(node2);
     return Math.sqrt(Math.pow(node1.address[0]-node2.address[0],2)+Math.pow(node1.address[1]-node2.address[1],2));//计算两点间距离
