@@ -11,6 +11,7 @@ import { CalendarOptions, EventInput } from '@fullcalendar/core'
 import zhcnLocale from '@fullcalendar/core/locales/zh-cn'
 import { PropType } from 'vue';
 import { Event } from '../services/core'
+import { dialogs } from '../services/dialogs';
 export default {
   components: {
     FullCalendar
@@ -47,6 +48,9 @@ export default {
         locale: 'zh-cn',
         allDaySlot: false,
         aspectRatio: 1.5,
+        eventClick(info) {
+          dialogs.detailDialog?.open(info.event.extendedProps['sourceType'], 'readonly', info.event.extendedProps['source']);
+        }
       } as CalendarOptions
     }
   },
@@ -64,6 +68,7 @@ export default {
         if (this.events) {
           for (const i of this.events) {
             calendarEvents.push({
+              ...i,
               title: i.source.name,
               start: i.start,
               end: i.end,

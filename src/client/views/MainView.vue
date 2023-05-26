@@ -29,13 +29,23 @@
     </div>
     <div v-else-if="activeTab === 'management'">
       <div style="display:flex;">
-        <el-button type="primary" @click="add">
-          <el-icon>
-            <Plus />
-          </el-icon>
-          添加
-        </el-button>
-        <el-input class="flex-grow" style="margin-left: 10px;" v-model="input" placeholder="查找">
+        <el-popover width="200px">
+          <template #reference>
+            <el-button type="primary">
+              <el-icon>
+                <Plus />
+              </el-icon>
+              添加
+            </el-button>
+          </template>
+          <div>
+            <el-button-group>
+              <el-button @click="addActivity">课外活动</el-button>
+              <el-button @click="addTempwork">临时事务</el-button>
+            </el-button-group>
+          </div>
+        </el-popover>
+        <el-input class="flex-grow" style="margin-left: 10px;" v-model="searchInput" placeholder="查找名称">
           <template #prefix>
             <el-icon>
               <Search />
@@ -43,14 +53,22 @@
           </template>
         </el-input>
       </div>
-      <el-table :data="tableData" stripe>
+      <el-table :data="filterTableData" stripe>
         <el-table-column prop="type" label="类型" width="100" />
-        <el-table-column prop="name" label="名称" width="150" />
+        <el-table-column prop="name" label="名称" width="200" />
         <el-table-column prop="time" label="时间" />
         <el-table-column prop="place" label="地点" />
         <el-table-column fixed="right" label="操作" width="120">
-          <el-button link type="primary">编辑</el-button>
-          <el-button link type="danger">删除</el-button>
+          <template #default="scope">
+            <template v-if="scope.row.type == '课外活动'">
+              <el-button link type="primary" @click="editActivity(scope.row.source)">编辑</el-button>
+              <el-button link type="danger" @click="delActivity(scope.row.source)">删除</el-button>
+            </template>
+            <template v-else>
+              <el-button link type="primary" @click="editTempwork(scope.row.source)">编辑</el-button>
+              <el-button link type="danger" @click="delTempwork(scope.row.source)">删除</el-button>
+            </template>
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -109,7 +127,7 @@ import Calendar from '../components/Calendar.vue'
 import { Alarm, Scheduler } from '../services/core';
 import data from '../services/data';
 import { User, Clock, Search, Plus } from '@element-plus/icons-vue'
-import { Schedule } from '../../common/definitions';
+import { Activity, Schedule, Tempwork } from '../../common/definitions';
 import { dayToStr } from '../../common/day';
 import { dialogs } from '../services/dialogs'
 
@@ -133,7 +151,7 @@ export default {
       dialogVisible: false,
       activeName: 'first',
       activeTab: 'calendar' as ('calendar' | 'management' | 'map'),
-      input: '',
+      searchInput: '',
     }
   },
   computed: {
@@ -141,8 +159,20 @@ export default {
       if (!this.schedule) return [];
       const result = [];
       const localWeekday = ['一', '二', '三', '四', '五', '六', '日'];
+      for (const i of this.schedule.tempworks) {
+        result.push({
+          source: i,
+          type: '临时事务',
+          name: i.name,
+          time: `${dayToStr(i.day)} ${i.time}:00`,
+          place: i.placeInfo.type === 'online'
+            ? `线上 ${i.placeInfo.link}`
+            : `${i.placeInfo.id}${i.placeInfo.detail}`,
+        })
+      }
       for (const i of this.schedule.activities) {
         result.push({
+          source: i,
           type: '课外活动',
           name: i.name,
           time: (i.repeat.type === 'once'
@@ -150,13 +180,20 @@ export default {
             : i.repeat.type === 'daily'
               ? `${dayToStr(i.repeat.startDay)}-${dayToStr(i.repeat.endDay)}`
               : `第${i.repeat.startWeek}周到第${i.repeat.endWeek}周 每周${localWeekday[i.repeat.weekday]}`)
-            + `${i.startTime}:00-${i.startTime + 1}:00`,
+            + ' ' + `${i.startTime}:00-${i.startTime + 1}:00`,
           place: i.placeInfo.type === 'online'
             ? `线上 ${i.placeInfo.link}`
             : `${i.placeInfo.id}${i.placeInfo.detail}`,
         })
       }
       return result;
+    },
+    filterTableData() {
+      return this.tableData.filter(
+        (data) =>
+          !this.searchInput ||
+          data.name.toLowerCase().includes(this.searchInput.toLowerCase())
+      )
     }
   },
   methods: {
@@ -201,10 +238,62 @@ export default {
         ElMessageBox.alert(i.description, '提醒')
       }
     },
-    async add() {
-      const t = await dialogs.detailDialog?.open('activity', 'new');
-      console.log(t);
-    }
+    async addActivity() {
+      const newActivity = await dialogs.detailDialog?.open('activity', 'new') as Activity;
+      await data.addActivity({
+        ...newActivity,
+        students: [{
+          id: data.getUserId(),
+          name: this.username
+        }]
+      });
+      this.reloadSchedule();
+    },
+    async editActivity(activity: Activity) {
+      const newActivity = await dialogs.detailDialog?.open('activity', 'edit', activity) as Activity;
+      await data.updateActivity({
+        ...newActivity,
+        students: [{
+          id: data.getUserId(),
+          name: this.username
+        }]
+      });
+      this.reloadSchedule();
+    },
+    async delActivity(activity: Activity) {
+      await data.delActivity(activity.id);
+      this.reloadSchedule();
+    },
+    async addTempwork() {
+      const newTempwork = await dialogs.detailDialog?.open('tempwork', 'new') as Tempwork;
+      await data.addTempwork({
+        ...newTempwork,
+        students: [{
+          id: data.getUserId(),
+          name: this.username
+        }]
+      });
+      this.reloadSchedule();
+    },
+    async editTempwork(tempwork: Tempwork) {
+      const newTempwork = await dialogs.detailDialog?.open('tempwork', 'edit', tempwork) as Tempwork;
+      await data.updateTempwork({
+        ...newTempwork,
+        students: [{
+          id: data.getUserId(),
+          name: this.username
+        }]
+      });
+      this.reloadSchedule();
+    },
+    async delTempwork(tempwork: Tempwork) {
+      await data.delTempwork(tempwork.id);
+      this.reloadSchedule();
+    },
+    async reloadSchedule() {
+      this.schedule = await data.getSchedule();
+      this.scheduler = new Scheduler(this.schedule, this.now);
+    },
   },
   async mounted() {
     const user = data.currentUser;
@@ -212,11 +301,11 @@ export default {
       this.$router.replace('/login');
     } else {
       this.username = user.name;
-      this.schedule = await data.getSchedule$();
-      this.scheduler = new Scheduler(this.schedule, this.now);
+      await this.reloadSchedule();
       this.toggleTimer();
     }
   },
+
   unmounted() {
     if (this.timerRunning) {
       this.toggleTimer();

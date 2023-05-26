@@ -1,6 +1,6 @@
 <template>
   <el-dialog v-model="visible" :title="title">
-    <el-form :model="formData" label-width="120px" :disabled="mode === 'readonly'">
+    <el-form ref="form" :model="formData" :rules="rules" label-width="120px" :disabled="mode === 'readonly'">
       <el-form-item label="名称" prop="name">
         <el-input v-model="formData.name" style="width:400px;" />
       </el-form-item>
@@ -118,6 +118,7 @@
 import { Activity, Course, Tempwork } from '../../common/definitions';
 import { dialogs } from '../services/dialogs';
 import { dayToDate, dateToDay } from '../../common/day';
+import { FormInstance } from 'element-plus';
 
 
 const initialFormData = {
@@ -156,7 +157,7 @@ export default {
       type: 'course' as 'course' | 'activity' | 'tempwork',
       mode: 'readonly' as 'readonly' | 'edit' | 'new',
       title: '',
-      formData: initialFormData,
+      formData: JSON.parse(JSON.stringify(initialFormData)),
       week: [
         { key: 0, value: '周一' },
         { key: 1, value: '周二' },
@@ -167,6 +168,12 @@ export default {
         { key: 6, value: '周日' }
       ],
       resolve: (a: Course | null) => { },
+      rules: {
+        name: [
+          { required: true, message: '名称不能为空', trigger: 'blur' },
+          { max: 50, message: '长度不能超过50字符', trigger: 'blur' },
+        ],
+      }
     }
   },
   methods: {
@@ -178,7 +185,7 @@ export default {
       this.mode = mode;
       this.title = (mode === 'new' ? '新建' : mode === 'edit' ? '编辑' : '查看')
         + (type === 'course' ? '课程' : type === 'activity' ? '课外活动' : '临时事务')
-      this.formData = initialFormData;
+      this.formData = JSON.parse(JSON.stringify(initialFormData));
       if (mode !== 'new' && init !== null) {
         this.formData.id = init.id;
         this.formData.name = init.name;
@@ -195,6 +202,7 @@ export default {
           this.formData.endTime = (course.startTime + course.duration) + ':00'
           this.formData.startWeek = course.startWeek;
           this.formData.endWeek = course.endWeek;
+          this.formData.weekday = course.weekday;
           if (course.examInfo) {
             this.formData.exam.exist = true;
             this.formData.exam.day = dayToDate(course.examInfo.day);
@@ -235,7 +243,8 @@ export default {
       this.visible = false;
       this.resolve(null);
     },
-    confirm() {
+    async confirm() {
+      if (!await (this.$refs.form as FormInstance).validate()) return;
       this.visible = false;
       const result: any = {
         id: this.formData.id,
@@ -252,6 +261,7 @@ export default {
         result.duration = this.strToTime(this.formData.endTime) - result.startTime;
         result.startWeek = this.formData.startWeek;
         result.endWeek = this.formData.endWeek;
+        result.weekday = this.formData.weekday;
         if (this.formData.exam.exist) {
           result.examInfo = {
             day: dateToDay(this.formData.exam.day),

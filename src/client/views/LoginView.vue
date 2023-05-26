@@ -50,7 +50,7 @@ export default {
     }
   },
   async created() {
-    this.users = await data.getUsers$();
+    this.users = await data.getUsers();
     this.loading = false;
   },
   methods: {
