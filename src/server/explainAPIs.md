@@ -187,4 +187,152 @@ post这个json可以在临时事物中增加如msg字段描述的“买冰淇淋
       id: '2'
     }
 ```
-
+---
+增加了提交时间错误后返回建议时间的功能。
+如果增加的activity/tempwork产生时间冲突，将返回一个列表，表内是修改过的四个post表单的msg部分，这些部分的时间被修改以不产生时间冲突，例如提交这样一个表单：
+```ts
+{
+        "command":"add",
+        "msg":{
+            "name": "买冰淇淋",
+            "day": {
+                "year": 2023,
+                "month": 3,
+                "day": 4
+            },
+            "time": 17,
+            "placeInfo": {
+                "type": "online",
+                "link": "https://csrf.com"
+            },
+            "students": [
+                {
+                    "id": "1",
+                    "name": "张三"
+                },
+                {
+                    "id": "5",
+                    "name": "太阳能rf"
+                },
+                {
+                    "id": "4",
+                    "name": "可爱软萌的猫娘女仆yya"
+                }
+            ]
+        }
+    }
+```
+(若错误)将产生以下这样的返回：
+```ts
+[
+    {
+        "name": "买冰淇淋",
+        "day": {
+            "year": 2023,
+            "month": 3,
+            "day": 4
+        },
+        "time": 18,
+        "placeInfo": {
+            "type": "online",
+            "link": "https://csrf.com"
+        },
+        "students": [
+            {
+                "id": "1",
+                "name": "张三"
+            },
+            {
+                "id": "5",
+                "name": "太阳能rf"
+            },
+            {
+                "id": "4",
+                "name": "可爱软萌的猫娘女仆yya"
+            }
+        ]
+    },
+    {
+        "name": "买冰淇淋",
+        "day": {
+            "year": 2023,
+            "month": 3,
+            "day": 4
+        },
+        "time": 19,
+        "placeInfo": {
+            "type": "online",
+            "link": "https://csrf.com"
+        },
+        "students": [
+            {
+                "id": "1",
+                "name": "张三"
+            },
+            {
+                "id": "5",
+                "name": "太阳能rf"
+            },
+            {
+                "id": "4",
+                "name": "可爱软萌的猫娘女仆yya"
+            }
+        ]
+    },
+    {
+        "name": "买冰淇淋",
+        "day": {
+            "year": 2023,
+            "month": 3,
+            "day": 4
+        },
+        "time": 20,
+        "placeInfo": {
+            "type": "online",
+            "link": "https://csrf.com"
+        },
+        "students": [
+            {
+                "id": "1",
+                "name": "张三"
+            },
+            {
+                "id": "5",
+                "name": "太阳能rf"
+            },
+            {
+                "id": "4",
+                "name": "可爱软萌的猫娘女仆yya"
+            }
+        ]
+    },
+    {
+        "name": "买冰淇淋",
+        "day": {
+            "year": 2023,
+            "month": 3,
+            "day": 4
+        },
+        "time": 21,
+        "placeInfo": {
+            "type": "online",
+            "link": "https://csrf.com"
+        },
+        "students": [
+            {
+                "id": "1",
+                "name": "张三"
+            },
+            {
+                "id": "5",
+                "name": "太阳能rf"
+            },
+            {
+                "id": "4",
+                "name": "可爱软萌的猫娘女仆yya"
+            }
+        ]
+    }
+]
+```
+若不产生时间冲突，将直接返回：“success”
