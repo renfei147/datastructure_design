@@ -3,7 +3,9 @@ import ViteExpress from "vite-express";
 import { Activity, Course, Schedule, User, Tempwork } from "../common/definitions";
 import { HashTable } from "./HashTable";
 import { findShortestPath } from "./ShortestPath";
+import { TSP } from "../common/definitions";
 import fse from "fs-extra";
+import { findTSP } from "./TSP";
 
 let url = require("url");
 
@@ -142,7 +144,12 @@ app.get("/api/shortestPath", (req, res) => {
   })
 });
 /*以上为基础操作*/
-
+// let mymap:Location[]=[];
+// fse.readFile("src/server/map.json").then((data) => {
+//     mymap=(JSON.parse(data.toString()));
+//     console.log(findTSP([mymap[1],mymap[92],mymap[97],mymap[123],mymap[57],mymap[2],mymap[91],mymap[125],mymap[90],mymap[129]]));
+    
+// });
 
 /*以下为course增删改操作*/
 app.post("/api/addcourse", (req, res) => {
