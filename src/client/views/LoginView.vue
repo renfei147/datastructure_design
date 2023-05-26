@@ -7,6 +7,7 @@
       {{ user.name }}
     </el-button>
   </div>
+  <div>{{ shortest }}</div>
 </template>
 <style scoped>
 .title {
@@ -14,7 +15,7 @@
 }
 </style>
 <script lang="ts">
-import { User } from '../../common/definitions';
+import { User, ShortestPath} from '../../common/definitions';
 import data from '../services/data';
 
 export default {
@@ -22,11 +23,13 @@ export default {
     return {
       users: [] as User[],
       loading: true,
+      shortest:{} as ShortestPath
     }
   },
   async created() {
     this.users = await data.getUsers$();
     this.loading = false;
+    this.shortest = await data.getShortestPath$(1,0);
   },
   methods: {
     login(user: User) {

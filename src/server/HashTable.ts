@@ -2,7 +2,7 @@ export class HashTable<T = any>{
     private hashLength: number = 31;
     private hashNum: number = 0;// 表示存储元素数
     private indexStorage: [string, T][][] = [];//  用于存储数据，本哈希表采用链地址法解决地址冲突
-
+    
     private getHash(id: string, Mod: number): number {
         const bas = 61;
         const length = id.length;
