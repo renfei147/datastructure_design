@@ -184,19 +184,19 @@ app.post("/api/delcourse", (req, res) => {
   if (result) {
     res.send("success");
   } else {
-    res.status(401).send("not exist");
+    res.send("not exist");
   }
 });
 
 app.post("/api/updcourse", (req, res) => {
   let body = req.body;
   let course = body.msg;
-  if (body.id in withStudentsCourse) {
-    withStudentsCourse[body.id] = course;
+  if (course.id in withStudentsCourse) {
+    withStudentsCourse[course.id] = course;
     com_withStudentsCourse[Object.keys(com_withStudentsCourse).length + 1] = body;
     res.send("success");
   } else {
-    res.status(401).send("not exist");
+    res.send("not exist");
   }
 });
 /*以上为course增删改操作*/
@@ -322,19 +322,108 @@ app.post("/api/delactivity", (req, res) => {
   if (result) {
     res.send("success");
   } else {
-    res.status(401).send("not exist");
+    res.send("not exist");
   }
 });
 
 app.post("/api/updactivity", (req, res) => {
   let body = req.body;
   let course = body.msg;
-  if (body.id in withStudentsActivity) {
-    withStudentsActivity[body.id] = course;
+
+  let proposedTimeIntervals = [];
+  let alternativeTimeIntervals = [];
+  console.log("enter activity");
+  switch (body.msg.repeat.type) {
+    case "once":
+      proposedTimeIntervals.push(convertToTimeInterval(course.repeat.day, course.startTime, 1));
+      if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
+        for (let i = 1; alternativeTimeIntervals.length <= 3; i++) {
+          let alternativeTimeInterval = convertToTimeInterval(course.repeat.day, course.startTime + i, 1);
+          if (!isTimeIntervalCollision([...time_interval_list, alternativeTimeInterval])) {
+            let newDay = new Date(alternativeTimeInterval.start);
+            let newCourse = { ...course };
+            newCourse.repeat.day = {
+              year: newDay.getFullYear(),
+              month: newDay.getMonth(),
+              day: newDay.getDate()
+            };
+            newCourse.startTime = newDay.getHours();
+            alternativeTimeIntervals.push(newCourse);
+          }
+        }
+        return res.send(alternativeTimeIntervals);
+      }
+      else time_interval_list.push(...proposedTimeIntervals);
+      break;
+
+    case "weekly":
+      console.log("dealing weekly");
+      for (let i = course.repeat.startWeek; i <= course.repeat.endWeek; i++) {
+        console.log("p1 " + i);
+        proposedTimeIntervals.push(TimeStampConvertToTimeInterval(dayToDate(schedule.firstDay).getTime() + i * 7 * 24 * 3600 * 1000 + course.repeat.weekday * 24 * 3600 * 1000 + course.startTime * 3600 * 1000, 1));
+      }
+      if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
+        console.log("p2");
+        for (let i = 1; alternativeTimeIntervals.length <= 3; i++) {
+          console.log("p3 " + i);
+          let alternativeTimeInterval = [];
+          for (let TimeIntervalCount = 0; TimeIntervalCount < proposedTimeIntervals.length; TimeIntervalCount++) {
+            alternativeTimeInterval.push({ start: proposedTimeIntervals[TimeIntervalCount].start + 3600 * 1000 * i, end: proposedTimeIntervals[TimeIntervalCount].end + 3600 * 1000 * i })
+            console.log("p4 " + i);
+            // if(!(i%5)) console.log(alternativeTimeInterval);
+          }
+          console.log("p5 ");
+          if (!isTimeIntervalCollision([...time_interval_list, ...alternativeTimeInterval])) {
+            let newDay = new Date(alternativeTimeInterval[0].start);
+            let newCourse = { ...course };
+            newCourse.repeat.weekday = newDay.getDay() - 1;//这个方法返回一周中的第几天
+            if (newCourse.repeat.weekday == -1) newCourse.repeat.weekday = 6;//这是为了让周一变成0，周日变成6
+            //我认为startweek和endweek应该不变，毕竟总能排到晚上去，如果要检查周数太麻烦了，先挖坑在此
+            newCourse.startTime = newDay.getHours();
+            alternativeTimeIntervals.push(newCourse);
+          }
+        }
+        return res.send(alternativeTimeIntervals);
+      }
+      else time_interval_list.push(...proposedTimeIntervals);
+      break;
+    case "daily":
+      for (let i = (dayToDate(course.repeat.endDay).getTime() - dayToDate(course.repeat.startDay).getTime()) / (24 * 3600 * 1000); i >= 0; i--)
+        proposedTimeIntervals.push(convertToTimeInterval(course.repeat.day, course.startTime + 24 * i, 1));
+      if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
+        for (let i = 1; alternativeTimeIntervals.length <= 3; i++) {
+          let alternativeTimeInterval = [];
+          for (let TimeIntervalCount = 0; TimeIntervalCount < proposedTimeIntervals.length; TimeIntervalCount++) alternativeTimeInterval.push({ start: proposedTimeIntervals[TimeIntervalCount].start + 3600 * 1000 * i, end: proposedTimeIntervals[TimeIntervalCount].end + 3600 * 1000 * i })
+          if (!isTimeIntervalCollision([...time_interval_list, ...alternativeTimeInterval])) {
+            let newDay = new Date(alternativeTimeInterval[0].start);
+            let newCourse = { ...course };
+            newCourse.repeat.startDay = {
+              year: newDay.getFullYear(),
+              month: newDay.getMonth(),
+              day: newDay.getDate()
+            };
+            newDay = new Date(alternativeTimeInterval[alternativeTimeInterval.length - 1].start);
+            newCourse.repeat.endDay = {
+              year: newDay.getFullYear(),
+              month: newDay.getMonth(),
+              day: newDay.getDate()
+            };
+            newCourse.startTime = newDay.getHours();
+            alternativeTimeIntervals.push(newCourse);
+          }
+        }
+        return res.send(alternativeTimeIntervals);
+      }
+      else time_interval_list.push(...proposedTimeIntervals);
+      break;
+  }
+
+  if (course.id in withStudentsActivity) {
+    withStudentsActivity[course.id] = course;
     com_withStudentsActivity[Object.keys(com_withStudentsActivity).length + 1] = body;
     res.send("success");
   } else {
-    res.status(401).send("not exist");
+    res.send("not exist");
   }
 
 });
@@ -346,6 +435,7 @@ app.post("/api/addtempwork", (req, res) => {
   let body = req.body;
   let course = body.msg;
   let nextID = 0;
+  /*
   let proposedTimeIntervals = [];
   let alternativeTimeIntervals = [];
   proposedTimeIntervals.push(convertToTimeInterval(course.day, course.time, 1));
@@ -368,6 +458,7 @@ app.post("/api/addtempwork", (req, res) => {
     return res.send(alternativeTimeIntervals);
   }
   else time_interval_list.push(...proposedTimeIntervals);
+  */
   for (const [key, value] of Object.entries(withStudentsTempwork)) {
     if (parseInt(key) > nextID) nextID = parseInt(key);
     // if (value.name == course.name) return res.status(401).send("already exist");
@@ -395,19 +486,19 @@ app.post("/api/deltempwork", (req, res) => {
   if (result) {
     res.send("success");
   } else {
-    res.status(401).send("not exist");
+    res.send("not exist");
   }
 });
 
 app.post("/api/updtempwork", (req, res) => {
   let body = req.body;
   let course = body.msg;
-  if (body.id in withStudentsTempwork) {
-    withStudentsTempwork[body.id] = course;
+  if (course.id in withStudentsTempwork) {
+    withStudentsTempwork[course.id] = course;
     com_withStudentsTempwork[Object.keys(com_withStudentsTempwork).length + 1] = body;
     res.send("success");
   } else {
-    res.status(401).send("not exist");
+    res.send("not exist");
   }
 
 });
