@@ -336,7 +336,7 @@ app.post("/api/delactivity", (req, res) => {
 app.post("/api/updactivity", (req, res) => {
   let body = req.body;
   let course = body.msg;
-
+  //以下开始检测
   let proposedTimeIntervals = [];
   let alternativeTimeIntervals = [];
   console.log("enter activity");
