@@ -73,7 +73,10 @@
       </el-table>
     </div>
     <div v-else>
-      这是一张地图
+      <div>
+        <img id="map-bg" width="500" src="public/xtc.jpg">
+        <canvas id="map-canvas" width="500"></canvas>
+      </div>
     </div>
   </div>
 

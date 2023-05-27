@@ -32,7 +32,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="日期" v-if="formData.repeat === 'once'">
-          <el-date-picker v-model="formData.startDay" type="date" />
+          <el-date-picker v-model="formData.day" type="date" />
         </el-form-item>
         <el-form-item label="日期" v-if="formData.repeat === 'daily'">
           <el-date-picker v-model="formData.startDay" type="date" />
@@ -152,12 +152,14 @@ const initialFormData = {
 export default {
   events: ['cancel', 'confirm'],
   data() {
+    const newFormData = { ...initialFormData };
+    newFormData.exam = { ...initialFormData.exam };
     return {
       visible: false,
       type: 'course' as 'course' | 'activity' | 'tempwork',
       mode: 'readonly' as 'readonly' | 'edit' | 'new',
       title: '',
-      formData: JSON.parse(JSON.stringify(initialFormData)),
+      formData: newFormData,
       week: [
         { key: 0, value: '周一' },
         { key: 1, value: '周二' },
@@ -185,7 +187,10 @@ export default {
       this.mode = mode;
       this.title = (mode === 'new' ? '新建' : mode === 'edit' ? '编辑' : '查看')
         + (type === 'course' ? '课程' : type === 'activity' ? '课外活动' : '临时事务')
-      this.formData = JSON.parse(JSON.stringify(initialFormData));
+
+      const newFormData = { ...initialFormData };
+      newFormData.exam = { ...initialFormData.exam };
+      this.formData = newFormData;
       if (mode !== 'new' && init !== null) {
         this.formData.id = init.id;
         this.formData.name = init.name;
