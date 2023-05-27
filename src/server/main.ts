@@ -337,7 +337,14 @@ app.post("/api/updactivity", (req, res) => {
   let body = req.body;
   let course = body.msg;
   //以下开始检测
-  let proposedTimeIntervals = [];
+  
+
+  if (course.id in withStudentsActivity) {
+    //先复制一份活动，然后把这个活动删掉，检测新的活动有没有时间冲突，如果有，再把老活动加回去；如果没冲突，就把新活动加进去
+    let oldCourse =JSON.parse(JSON.stringify(withStudentsActivity[course.id])) ;
+    delete withStudentsActivity[course.id];
+
+    let proposedTimeIntervals = [];
   let alternativeTimeIntervals = [];
   console.log("enter activity");
   switch (body.msg.repeat.type) {
@@ -358,6 +365,7 @@ app.post("/api/updactivity", (req, res) => {
             alternativeTimeIntervals.push(newCourse);
           }
         }
+        withStudentsActivity[course.id] = oldCourse;
         return res.send(alternativeTimeIntervals);
       }
       else time_interval_list.push(...proposedTimeIntervals);
@@ -390,6 +398,7 @@ app.post("/api/updactivity", (req, res) => {
             alternativeTimeIntervals.push(newCourse);
           }
         }
+        withStudentsActivity[course.id] = oldCourse;
         return res.send(alternativeTimeIntervals);
       }
       else time_interval_list.push(...proposedTimeIntervals);
@@ -419,13 +428,13 @@ app.post("/api/updactivity", (req, res) => {
             alternativeTimeIntervals.push(newCourse);
           }
         }
+        withStudentsActivity[course.id] = oldCourse;
         return res.send(alternativeTimeIntervals);
       }
       else time_interval_list.push(...proposedTimeIntervals);
       break;
   }
 
-  if (course.id in withStudentsActivity) {
     withStudentsActivity[course.id] = course;
     com_withStudentsActivity[Object.keys(com_withStudentsActivity).length + 1] = body;
     res.send("success");
