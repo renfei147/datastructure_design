@@ -54,7 +54,7 @@ export default {
   async created() {
     this.users = await data.getUsers();
     this.loading = false;
-    this.shortest = await data.getShortestPath$(1,0);
+    this.shortest = await data.getShortestPath(1,0);
   },
   methods: {
     login(user: User) {
