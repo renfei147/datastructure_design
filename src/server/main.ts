@@ -157,7 +157,7 @@ fse.readFile("src/server/map.json").then((data) => {
     mymap=(JSON.parse(data.toString()));
     // console.log(findTSP([mymap[1],mymap[92],mymap[97],mymap[123],mymap[57],mymap[2],mymap[91],mymap[125],mymap[90],mymap[129]]));
 });
-
+//tsp api
 app.post("/api/tsp",(req,res)=>{
     let body=req.body.idlist;
     let locations:Location[]=[];
