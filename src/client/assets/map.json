@@ -39,7 +39,7 @@
         "id":6,
         "name":"北门丁字路口",
         "address":[420,180],
-        "connection":[2,5,7,10,13]
+        "connection":[2,7,10,13]
     },
     {
         "id":7,
@@ -62,7 +62,7 @@
     {
         "id":10,
         "name":"招生办",
-        "address":[393,210],
+        "address":[403,220],
         "connection":[6]
     },
     {
@@ -75,7 +75,7 @@
         "id":12,
         "name":"学十",
         "address":[350,270],
-        "connection":[22]
+        "connection":[13,15]
     },
     {
         "id":13,
@@ -111,7 +111,7 @@
         "id":18,
         "name":"门口",
         "address":[820,250],
-        "connection":[17]
+        "connection":[17,19,40]
     },
     {
         "id":19,
@@ -357,7 +357,7 @@
     {
         "id":59,
         "name":"学生发展中心",
-        "address":[490,420],
+        "address":[180,200],
         "connection":[58]
     },
     {
@@ -478,7 +478,7 @@
         "id":79,
         "name":"路口",
         "address":[840,590],
-        "connection":[78,121,128]
+        "connection":[78,87,121,128]
     },
     {
         "id":80,
@@ -610,7 +610,7 @@
         "id":101,
         "name":"教二北门",
         "address":[540,930],
-        "connection":[95,102]
+        "connection":[95,102,154]
     },
     {
         "id":102,
@@ -651,7 +651,7 @@
     {
         "id":108,
         "name":"中门邮局",
-        "address":[440,1060],
+        "address":[440,1410],
         "connection":[107]
     },
     {
@@ -747,8 +747,8 @@
     {
         "id":124,
         "name":"路口",
-        "address":[290,890],
-        "connection":[96,95]
+        "address":[660,520],
+        "connection":[123,125,96,95]
     },
     {
         "id":125,

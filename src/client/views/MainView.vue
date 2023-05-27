@@ -73,10 +73,7 @@
       </el-table>
     </div>
     <div v-else>
-      <div>
-        <img id="map-bg" width="500" src="public/xtc.jpg">
-        <canvas id="map-canvas" width="500"></canvas>
-      </div>
+      <MapComponent />
     </div>
   </div>
 
@@ -127,6 +124,7 @@
 <script lang="ts">
 import { ElMessageBox } from 'element-plus';
 import Calendar from '../components/Calendar.vue'
+import MapComponent from '../components/MapComponent.vue'
 import { Alarm, Scheduler } from '../services/core';
 import data from '../services/data';
 import { User, Clock, Search, Plus } from '@element-plus/icons-vue'
@@ -141,6 +139,7 @@ export default {
     Clock,
     Search,
     Plus,
+    MapComponent,
   },
   data() {
     return {
@@ -298,6 +297,7 @@ export default {
       this.scheduler = new Scheduler(this.schedule, this.now);
     },
   },
+
   async mounted() {
     const user = data.currentUser;
     if (user === null) {
