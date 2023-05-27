@@ -79,3 +79,10 @@ export interface TSP{
     isAvilable: boolean;//如果为false，说明没有这样的路径。
     distance: number;
 }
+
+export interface Location {
+    id: number;
+    name: string;
+    address: [number, number];
+    connection: number[];
+}
