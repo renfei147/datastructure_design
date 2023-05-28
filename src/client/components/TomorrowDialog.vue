@@ -2,7 +2,7 @@
   <el-dialog v-model="visible" title="明日事件提醒">
     <el-empty v-if="events.length === 0" description="明天的你有点闲哦~" />
     <el-table v-else :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="type" label="类型" />
+      <el-table-column prop="type" label="类型" width="100px"/>
       <el-table-column prop="name" label="名称" />
       <el-table-column prop="time" label="时间" />
     </el-table>

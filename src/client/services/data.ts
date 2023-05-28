@@ -72,4 +72,8 @@ export default {
             })
         })
     },
+
+    async getLog(): Promise<any> {
+        return fetch('/api/log').then(res => res.json());
+    },
 }
