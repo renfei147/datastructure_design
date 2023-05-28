@@ -1,16 +1,25 @@
 <template>
   <div class="container">
-    <h2 class="title">课程管理员系统</h2>
-    <div class="title">
+    <div>
+      <h2 class="title">课程管理员系统</h2>
+    </div>
+    <div style="display: flex;">
       <el-button type="primary" @click="addCourse">
         <el-icon>
           <Plus />
         </el-icon>
         添加课程
       </el-button>
+      <el-input class="flex-grow" style="margin-left: 10px;margin-right: 10px;" v-model="searchInput" placeholder="查找名称">
+        <template #prefix>
+          <el-icon>
+            <Search />
+          </el-icon>
+        </template>
+      </el-input>
       <el-button @click="logout">退出</el-button>
     </div>
-    <el-table :data="tableData" stripe style="width: 100%">
+    <el-table :data="filteredTableData" stripe style="width: 100%">
       <el-table-column prop="id" label="编号" width="100" sortable />
       <el-table-column prop="name" label="名称" sortable />
       <el-table-column prop="time" label="上课时间" width="250" sortable />
@@ -62,16 +71,18 @@ import { Course, User } from '../../common/definitions'
 import { courseToString, placeToStr } from '../services/format'
 import data from '../services/data';
 import { dialogs } from '../services/dialogs';
-import { Plus } from '@element-plus/icons-vue'
+import { Plus, Search } from '@element-plus/icons-vue'
 import { dayToStr } from '../../common/day';
 import { h } from 'vue';
 export default {
   components: {
     Plus,
+    Search,
   },
   data() {
     return {
-      courses: [] as (Course & { students: User[] })[]
+      courses: [] as (Course & { students: User[] })[],
+      searchInput: ''
     }
   },
   computed: {
@@ -86,7 +97,14 @@ export default {
           ? `${dayToStr(i.examInfo.day)} ${i.examInfo.startTime}:00-${i.examInfo.startTime + i.examInfo.duration}:00 ${placeToStr(i.examInfo.placeInfo)}`
           : '未安排'
       }))
-    }
+    },
+    filteredTableData() {
+      return this.tableData.filter(
+        (data) =>
+          !this.searchInput ||
+          data.name.toLowerCase().includes(this.searchInput.toLowerCase())
+      )
+    },
   },
   async created() {
     data.currentUser = { id: '-1', name: 'admin' };

@@ -8,6 +8,9 @@
         <el-button class="login-button" @click="loginAsAdmin">
           管理员登录
         </el-button>
+        <el-button class="login-button" @click="gotoLog">
+          查看日志
+        </el-button>
       </div>
       <div>
         <el-button class="login-button" v-for="user in users" @click="login(user)">
@@ -16,8 +19,6 @@
       </div>
     </div>
   </div>
-
-  <div>{{ shortest }}</div>
 </template>
 <style scoped>
 .container {
@@ -40,7 +41,7 @@
 
 </style>
 <script lang="ts">
-import { User, ShortestPath} from '../../common/definitions';
+import { User } from '../../common/definitions';
 import data from '../services/data';
 
 export default {
@@ -48,13 +49,11 @@ export default {
     return {
       users: [] as User[],
       loading: true,
-      shortest:{} as ShortestPath
     }
   },
   async created() {
     this.users = await data.getUsers();
     this.loading = false;
-    this.shortest = await data.getShortestPath(1,0);
   },
   methods: {
     login(user: User) {
@@ -63,6 +62,9 @@ export default {
     },
     loginAsAdmin() {
       this.$router.push('/admin');
+    },
+    gotoLog() {
+      this.$router.push('/log');
     }
   }
 }

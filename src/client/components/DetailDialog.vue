@@ -2,8 +2,22 @@
   <el-dialog v-model="visible" :title="title">
     <el-form ref="form" :model="formData" :rules="rules" label-width="120px" :disabled="mode === 'readonly'">
       <el-form-item label="名称" prop="name">
-        <el-input v-model="formData.name" style="width:400px;" />
+        <el-input v-if="type == 'course'" v-model="formData.name" style="width:400px;" />
+        <el-select v-else-if="type == 'activity'" v-model="formData.name" allow-create filterable style="width:400px;">
+          <el-option-group v-for="group in activityOptions" :key="group.label" :label="group.label">
+            <el-option v-for="item in group.options" :key="item.value" :label="item.label" :value="item.value"
+              @click="formData.collective = group.label == '集体活动'" />
+          </el-option-group>
+        </el-select>
+        <el-select v-else v-model="formData.name" allow-create filterable style="width:400px;">
+          <el-option v-for="item in tempworkOptions" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select>
       </el-form-item>
+
+      <el-form-item v-if="type == 'activity'" label="集体活动">
+        <el-checkbox v-model="formData.collective" />
+      </el-form-item>
+
       <el-form-item label="上课日期" v-if="type === 'course'">
         从第
         <el-input-number v-model="formData.startWeek" controls-position="right" :min="1" :max="12"
@@ -129,6 +143,7 @@ import { displayLocations } from '../services/map'
 const initialFormData = {
   id: '',
   name: '',
+  collective: false,
   startTime: '8:00',
   endTime: '9:00',
   weekday: 0,
@@ -136,7 +151,7 @@ const initialFormData = {
   endWeek: 1,
   placeType: 'offline',
   placeLink: '',
-  placeId: 0,
+  placeId: 154,
   placeDetail: '',
   repeat: 'once' as 'once' | 'daily' | 'weekly',
   day: new Date(),
@@ -149,7 +164,7 @@ const initialFormData = {
     endTime: '9:00',
     placeType: 'offline',
     placeLink: '',
-    placeId: 0,
+    placeId: 154,
     placeDetail: '',
   }
 }
@@ -181,7 +196,34 @@ export default {
           { max: 50, message: '长度不能超过50字符', trigger: 'blur' },
         ],
       },
-      displayLocations
+      displayLocations,
+      activityOptions: [
+        {
+          label: '个人活动',
+          options: [
+            { value: '自习', label: '自习' },
+            { value: '锻炼', label: '锻炼' },
+            { value: '外出', label: '外出' },
+          ],
+        },
+        {
+          label: '集体活动',
+          options: [
+            { value: '班会', label: '班会' },
+            { value: '小组作业', label: '小组作业' },
+            { value: '创新创业', label: '创新创业', },
+            { value: '聚餐', label: '聚餐', },
+            { value: '社团活动', label: '社团活动', },
+          ],
+        },
+      ],
+      tempworkOptions: [
+        { value: '购物', label: '购物' },
+        { value: '洗澡', label: '洗澡' },
+        { value: '取外卖', label: '取外卖' },
+        { value: '取快递', label: '取快递' },
+        { value: '送取东西', label: '送取东西' },
+      ]
     }
   },
   methods: {
@@ -230,6 +272,7 @@ export default {
           }
         } else if (type === 'activity') {
           const activity = init as Activity;
+          this.formData.collective = activity.collective;
           this.formData.startTime = activity.startTime + ':00';
           this.formData.repeat = activity.repeat.type;
           if (activity.repeat.type === 'once') {
@@ -282,6 +325,7 @@ export default {
           }
         }
       } else if (this.type === 'activity') {
+        result.collective = this.formData.collective;
         result.startTime = this.strToTime(this.formData.startTime);
         result.repeat = { type: this.formData.repeat };
         if (this.formData.repeat === 'once') {

@@ -28,7 +28,14 @@
     <Calendar class="small" :events="scheduler?.events" :now="now" />
   </div>
   <div v-else-if="activeTab === 'course'" class="container">
-    <el-table :data="courseTableData" stripe style="width: 100%">
+    <el-input class="flex-grow" v-model="courseSearchInput" placeholder="查找名称">
+      <template #prefix>
+        <el-icon>
+          <Search />
+        </el-icon>
+      </template>
+    </el-input>
+    <el-table :data="filteredCourseTableData" stripe style="width: 100%">
       <el-table-column prop="id" label="编号" width="100" sortable />
       <el-table-column prop="name" label="名称" sortable />
       <el-table-column prop="time" label="上课时间" width="250" sortable />
@@ -62,7 +69,7 @@
         </template>
       </el-input>
     </div>
-    <el-table :data="filterTableData" stripe>
+    <el-table :data="filteredTableData" stripe>
       <el-table-column prop="type" label="类型" width="100" sortable />
       <el-table-column prop="name" label="名称" sortable />
       <el-table-column prop="time" label="时间" width="250" sortable />
@@ -187,6 +194,7 @@ export default {
       dialogVisible: false,
       activeTab: 'calendar' as ('calendar' | 'course' | 'management' | 'map'),
       searchInput: '',
+      courseSearchInput: '',
       displayLocations,
       pathType: 'none' as 'none' | 'shortest' | 'tsp',
       startLocation: 54,
@@ -208,6 +216,13 @@ export default {
           ? `${dayToStr(i.examInfo.day)} ${i.examInfo.startTime}:00-${i.examInfo.startTime + i.examInfo.duration}:00 ${placeToStr(i.examInfo.placeInfo)}`
           : '未安排'
       }))
+    },
+    filteredCourseTableData(){
+      return this.courseTableData.filter(
+        (data) =>
+          !this.courseSearchInput ||
+          data.name.toLowerCase().includes(this.courseSearchInput.toLowerCase())
+      )
     },
     tableData() {
       if (!this.schedule) return [];
@@ -232,7 +247,7 @@ export default {
       }
       return result;
     },
-    filterTableData() {
+    filteredTableData() {
       return this.tableData.filter(
         (data) =>
           !this.searchInput ||
@@ -384,7 +399,7 @@ export default {
             for (const i of alt) {
               ps.push(h('p', {}, tempworkToString(i)));
             }
-            ElMessageBox.alert(h('div', {}, ps), '提醒');
+            ElMessageBox.alert(h('div', {}, ps), '冲突提醒', { center: true });
             return false;
           }
         }
@@ -409,7 +424,7 @@ export default {
             for (const i of alt) {
               ps.push(h('p', {}, tempworkToString(i)));
             }
-            ElMessageBox.alert(h('div', {}, ps), '提醒');
+            ElMessageBox.alert(h('div', {}, ps), '冲突提醒', { center: true });
             return false;
           }
         }
