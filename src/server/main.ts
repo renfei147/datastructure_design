@@ -950,11 +950,11 @@ function isTimeIntervalCollision(timeIntervals: time_interval[]): boolean {
   return false;
 }
 
-function isSameDay(day:Day, startTime:number):boolean{
+function  isSameDay(day:Day, startTime:number):boolean{
   let start = dayToDate(day).getTime() + startTime * 3600 * 1000;
   let Day1=new Date(start);
   let Day2=dayToDate(day);
-  return Day1.getFullYear()==Day2.getFullYear()&&Day1.getMonth()==Day2.getMonth()&&Day1.getDate()==Day2.getDate();
+  return Day1.getFullYear()==Day2.getFullYear()&&Day1.getMonth()==Day2.getMonth()&&Day1.getDate()==Day2.getDate()&&Day1.getHours()<=19;
 }
 
 function countCollision(timeIntervals: time_interval[]):number{
