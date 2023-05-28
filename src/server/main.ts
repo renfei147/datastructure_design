@@ -21,6 +21,12 @@ let is_time_interval_list_structed = false;
 let recentID = 0;
 let inDealingTempwork = false;
 let inDealingActivity = false;
+let mylist:{
+  time:string;
+  content:any;
+}[]=[];
+let mydate=new Date();
+
 const app = express();
 
 let users: User[];
@@ -142,12 +148,9 @@ fse.readJSON("src/server/withStudentTempwork.json").then((data) => {
 app.use(express.json())
 
 app.get("/api/log",(req,res)=>{
-  res.send({
-    log_activity:com_withStudentsActivity,
-    log_tempwork:com_withStudentsTempwork,
-    log_course:com_withStudentsCourse
-  })
+  res.send(JSON.stringify(mylist));
 });
+
 
 app.get("/api/users", (_, res) => {
   res.send(users);
@@ -252,6 +255,16 @@ app.post("/api/addcourse", (req, res) => {
     command: "add",
     msg: course
   };
+  //deal with log
+  mydate=new Date();
+  mylist.push({
+    time:mydate.toLocaleString(),
+    content:{
+      command: "add",
+      msg: course
+    }
+  });
+
   withStudentsCourse[nextID.toString()] = course;
   res.send("success");
 });
@@ -263,6 +276,12 @@ app.post("/api/delcourse", (req, res) => {
   if (body.msg in withStudentsCourse) {
     delete withStudentsCourse[body.msg];
     com_withStudentsCourse[Object.keys(com_withStudentsCourse).length + 1] = body;
+    //deal with log
+    mydate=new Date();
+    mylist.push({
+      time:mydate.toLocaleString(),
+      content:body
+    });
     result = true;
   }
   if (result) {
@@ -321,6 +340,12 @@ app.post("/api/updcourse", (req, res) => {
 
     withStudentsCourse[course.id] = course;
     com_withStudentsCourse[Object.keys(com_withStudentsCourse).length + 1] = body;
+    //deal with log
+    mydate=new Date();
+    mylist.push({
+      time:mydate.toLocaleString(),
+      content:body
+    });
     res.send("success");
   } else {
     res.send("not exist");
@@ -514,10 +539,23 @@ app.post("/api/addactivity", (req, res) => {
   console.log("nextID: " + nextID.toString());
   console.log(course);
   course["id"] = nextID.toString();
+  console.log(com_withStudentsActivity);
   com_withStudentsActivity[Object.keys(com_withStudentsActivity).length + 1] = {
     command: "add",
     msg: course
   };
+  //deal with log
+  mydate=new Date();
+  mylist.push({
+    time:mydate.toLocaleString(),
+    content:{
+      command: "add",
+      msg: course
+    }
+  });
+  console.log("nmnmnmnmnm");
+  console.log(com_withStudentsActivity);
+  console.log(JSON.stringify(com_withStudentsActivity[Object.keys(com_withStudentsActivity).length + 1]));
   withStudentsActivity[nextID.toString()] = course;
   res.send("success");
 });
@@ -528,6 +566,12 @@ app.post("/api/delactivity", (req, res) => {
   if (body.msg in withStudentsActivity) {
     delete withStudentsActivity[body.msg];
     com_withStudentsActivity[Object.keys(com_withStudentsActivity).length + 1] = body;
+    //deal with log
+    mydate=new Date();
+    mylist.push({
+      time:mydate.toLocaleString(),
+      content:body
+    });
     result = true;
   }
   if (result) {
@@ -648,6 +692,12 @@ app.post("/api/updactivity", (req, res) => {
 
     withStudentsActivity[course.id] = course;
     com_withStudentsActivity[Object.keys(com_withStudentsActivity).length + 1] = body;
+    //deal with log
+    mydate=new Date();
+    mylist.push({
+      time:mydate.toLocaleString(),
+      content:body
+    });
     res.send("success");
   } else {
     res.send("not exist");
@@ -710,6 +760,15 @@ app.post("/api/addtempwork", (req, res) => {
     command: "add",
     msg: course
   };
+  //deal with log
+  mydate=new Date();
+  mylist.push({
+    time:mydate.toLocaleString(),
+    content:{
+      command: "add",
+      msg: course
+    }
+  });
   withStudentsTempwork[nextID.toString()] = course;
   res.send("success");
 });
@@ -720,6 +779,12 @@ app.post("/api/deltempwork", (req, res) => {
   if (body.msg in withStudentsTempwork) {
     delete withStudentsTempwork[body.msg];
     com_withStudentsTempwork[Object.keys(com_withStudentsTempwork).length + 1] = body;
+    //deal with log
+    mydate=new Date();
+    mylist.push({
+      time:mydate.toLocaleString(),
+      content:body
+    });
     result = true;
   }
   if (result) {
@@ -768,6 +833,12 @@ app.post("/api/updtempwork", (req, res) => {
   if (course.id in withStudentsTempwork) {
     withStudentsTempwork[course.id] = course;
     com_withStudentsTempwork[Object.keys(com_withStudentsTempwork).length + 1] = body;
+    //deal with log
+    mydate=new Date();
+    mylist.push({
+      time:mydate.toLocaleString(),
+      content:body
+    });
     res.send("success");
   } else {
     res.send("not exist");
@@ -950,11 +1021,11 @@ function isTimeIntervalCollision(timeIntervals: time_interval[]): boolean {
   return false;
 }
 
-function isSameDay(day:Day, startTime:number):boolean{
+function  isSameDay(day:Day, startTime:number):boolean{
   let start = dayToDate(day).getTime() + startTime * 3600 * 1000;
   let Day1=new Date(start);
   let Day2=dayToDate(day);
-  return Day1.getFullYear()==Day2.getFullYear()&&Day1.getMonth()==Day2.getMonth()&&Day1.getDate()==Day2.getDate();
+  return Day1.getFullYear()==Day2.getFullYear()&&Day1.getMonth()==Day2.getMonth()&&Day1.getDate()==Day2.getDate()&&Day1.getHours()<=19;
 }
 
 function countCollision(timeIntervals: time_interval[]):number{
