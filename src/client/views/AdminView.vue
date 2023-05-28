@@ -64,6 +64,7 @@ import data from '../services/data';
 import { dialogs } from '../services/dialogs';
 import { Plus } from '@element-plus/icons-vue'
 import { dayToStr } from '../../common/day';
+import { h } from 'vue';
 export default {
   components: {
     Plus,
@@ -112,11 +113,11 @@ export default {
             return true;
           } else {
             const alt = res as Course[];
-            let msg = "时间冲突，以下是备选时间：\n";
+            let ps = [h('p', {}, '时间冲突，以下是备选时间：')];
             for (const i of alt) {
-              msg += `${courseToString(i)}\n`;
+              ps.push(h('p', {}, courseToString(i)));
             }
-            ElMessageBox.alert(msg, '提醒');
+            ElMessageBox.alert(h('div', {}, ps), '冲突提醒', { center: true });
             return false;
           }
         });
@@ -134,11 +135,11 @@ export default {
             return true;
           } else {
             const alt = res as Course[];
-            let msg = "时间冲突，以下是备选时间：\n";
+            let ps = [h('p', {}, '时间冲突，以下是备选时间：')];
             for (const i of alt) {
-              msg += `${courseToString(i)}\n`;
+              ps.push(h('p', {}, courseToString(i)));
             }
-            ElMessageBox.alert(msg, '提醒');
+            ElMessageBox.alert(h('div', {}, ps), '冲突提醒', { center: true });
             return false;
           }
         })
@@ -156,11 +157,11 @@ export default {
             return true;
           } else {
             const alt = res as Course[];
-            let msg = "时间冲突，以下是备选时间：\n";
+            let ps = [h('p', {}, '时间冲突，以下是备选时间：')];
             for (const i of alt) {
-              msg += `${courseToString(i)}\n`;
+              ps.push(h('p', {}, courseToString(i)));
             }
-            ElMessageBox.alert(msg, '提醒');
+            ElMessageBox.alert(h('div', {}, ps), '冲突提醒', { center: true });
             return false;
           }
         });

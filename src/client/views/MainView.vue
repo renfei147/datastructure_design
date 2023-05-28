@@ -82,9 +82,9 @@
     </el-table>
   </div>
   <div v-else class="container">
-    <div>
+    <div v-if="pathType != 'none'">
       <div>
-        起点
+        起点：
         <el-select v-model="startLocation" filterable placeholder="选择地点" style="width:150px;margin-right: 10px;">
           <el-option v-for="i in displayLocations" :key="i.id" :label="i.name" :value="i.id" />
         </el-select>
@@ -93,7 +93,9 @@
         {{ endOrPassLocationsText }}
       </div>
     </div>
-    <MapComponent :path="path" />
+    <div class="map-container">
+      <MapComponent :path="path" />
+    </div>
   </div>
 
   <el-dialog v-model="dialogVisible" title="设置时间" width="400px">
@@ -116,6 +118,10 @@
   width: 80%;
   margin: 0 auto;
   padding-top: 60px;
+}
+
+.map-container {
+  text-align: center;
 }
 
 .small {
@@ -158,6 +164,7 @@ import { dialogs } from '../services/dialogs'
 import { dayToStr } from '../../common/day';
 import { courseToString, tempworkToString, activityToString, placeToStr } from '../services/format';
 import { displayLocations, mapInfo } from '../services/map';
+import { h } from 'vue';
 
 export default {
   components: {
@@ -178,12 +185,11 @@ export default {
       timer: 0,
       timerRunning: false,
       dialogVisible: false,
-      activeName: 'first',
       activeTab: 'calendar' as ('calendar' | 'course' | 'management' | 'map'),
       searchInput: '',
       displayLocations,
       pathType: 'none' as 'none' | 'shortest' | 'tsp',
-      startLocation: 0,
+      startLocation: 54,
       endLocation: 0,
       passLocations: [] as number[],
       path: [] as number[]
@@ -321,11 +327,11 @@ export default {
             return true;
           } else {
             const alt = res as Activity[];
-            let msg = "时间冲突，以下是备选时间：\n";
+            let ps = [h('p', {}, '时间冲突，以下是备选时间：')];
             for (const i of alt) {
-              msg += `${activityToString(i)}\n`;
+              ps.push(h('p', {}, activityToString(i)));
             }
-            ElMessageBox.alert(msg, '提醒');
+            ElMessageBox.alert(h('div', {}, ps), '冲突提醒', { center: true });
             return false;
           }
         });
@@ -345,11 +351,11 @@ export default {
             return true;
           } else {
             const alt = res as Activity[];
-            let msg = "时间冲突，以下是备选时间：\n";
+            let ps = [h('p', {}, '时间冲突，以下是备选时间：')];
             for (const i of alt) {
-              msg += `${activityToString(i)}\n`;
+              ps.push(h('p', {}, activityToString(i)));
             }
-            ElMessageBox.alert(msg, '提醒');
+            ElMessageBox.alert(h('div', {}, ps), '冲突提醒', { center: true });
             return false;
           }
         }
@@ -374,11 +380,11 @@ export default {
             return true;
           } else {
             const alt = res as Tempwork[];
-            let msg = "时间冲突，以下是备选时间：\n";
+            let ps = [h('p', {}, '时间冲突，以下是备选时间：')];
             for (const i of alt) {
-              msg += `${tempworkToString(i)}\n`;
+              ps.push(h('p', {}, tempworkToString(i)));
             }
-            ElMessageBox.alert(msg, '提醒');
+            ElMessageBox.alert(h('div', {}, ps), '提醒');
             return false;
           }
         }
@@ -399,11 +405,11 @@ export default {
             return true;
           } else {
             const alt = res as Tempwork[];
-            let msg = "时间冲突，以下是备选时间：\n";
+            let ps = [h('p', {}, '时间冲突，以下是备选时间：')];
             for (const i of alt) {
-              msg += `${tempworkToString(i)}\n`;
+              ps.push(h('p', {}, tempworkToString(i)));
             }
-            ElMessageBox.alert(msg, '提醒');
+            ElMessageBox.alert(h('div', {}, ps), '提醒');
             return false;
           }
         }
@@ -421,7 +427,7 @@ export default {
       if (this.pathType == 'shortest') {
         this.path = (await data.getShortestPath(this.startLocation, this.endLocation)).path;
       } else if (this.pathType == 'tsp') {
-        this.path = (await data.getTSP([this.startLocation, ...this.passLocations])).path;
+        this.path = (await data.getTSP([this.startLocation, ...this.passLocations, this.startLocation])).path;
       }
     }
   },

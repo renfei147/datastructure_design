@@ -1,7 +1,8 @@
 <template>
   <svg width="1000" height="1408">
     <image href="public/xtc.jpg" height="100%" width="100%" x="-10" y="-10" />
-    <path :d="pathText" stroke="#ff3333" stroke-width="2" fill="none"/>
+    <path :d="pathText" stroke="#ff3333" stroke-width="4" fill="none"/>
+    
     <!-- <ellipse v-for="i of points" :cx="i.x" :cy="i.y" rx="4" ry="4" fill="#ff3333" @click="clickPoint(i)" /> -->
     <!-- <text v-for="i of points" text-anchor="middle" :x="i.x" :y="i.y + 4" font-size="8">{{ i.name }}</text> -->
   </svg>
