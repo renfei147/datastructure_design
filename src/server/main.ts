@@ -336,6 +336,10 @@ app.post("/api/addactivity", (req, res) => {
   let nextID = 0;
   let proposedTimeIntervals = [];
   let alternativeTimeIntervals = [];
+  //下面两个用于产生集体事务的备选方案
+  let badcaseList:{count:number,alternativeTimeInterval:time_interval[]}[]=[];
+  let badcasecount=0;
+
   structSchedule(recentID.toString());//强制算一遍time_interval_list
   console.log("enter activity");
   switch (course.repeat.type) {
@@ -351,6 +355,12 @@ app.post("/api/addactivity", (req, res) => {
           alternativeTimeInterval.push(convertToTimeInterval(course.repeat.day, course.startTime + i, 1));
           // console.log(alternativeTimeInterval);
           // console.log(time_interval_list);
+          
+          badcasecount=countCollision([...time_interval_list, ...alternativeTimeInterval]);
+          if(badcasecount) badcaseList.push({
+            count:badcasecount,
+            alternativeTimeInterval:alternativeTimeInterval
+          });
           if (!isTimeIntervalCollision([...time_interval_list, ...alternativeTimeInterval])) {
             console.log("p2 " + i);
             let newDay = new Date(alternativeTimeInterval[0].start);
@@ -366,9 +376,25 @@ app.post("/api/addactivity", (req, res) => {
         }
         // function dealAlternativeSend(alternativeTimeIntervals:any[],i:number,course:any){}
         // return dealAlternativeSend(alternativeTimeIntervals,i,course,res);
+        badcaseList.sort((a,b)=>a.count-b.count);
+        for(const badcase of badcaseList){
+          if(alternativeTimeIntervals.length>=3) break;
+          let alternativeTimeInterval=badcase.alternativeTimeInterval;
+          //以下部分随不同重复类型而改变
+          let newDay = new Date(alternativeTimeInterval[0].start);
+            let newCourse = { ...course };
+            newCourse.repeat.day = {
+              year: newDay.getFullYear(),
+              month: newDay.getMonth(),
+              day: newDay.getDate()
+            };
+            newCourse.startTime = newDay.getHours();
+            if(course.collective) alternativeTimeIntervals.push(newCourse);
+        }
         return res.send(alternativeTimeIntervals);
       }
-      else time_interval_list.push(...proposedTimeIntervals);
+      else 
+        time_interval_list.push(...proposedTimeIntervals);
       break;
 
     case "weekly":
@@ -389,6 +415,11 @@ app.post("/api/addactivity", (req, res) => {
             // if(!(i%5)) console.log(alternativeTimeInterval);
           }
           console.log("p5 ");
+          badcasecount=countCollision([...time_interval_list, ...alternativeTimeInterval]);
+          if(badcasecount) badcaseList.push({
+            count:badcasecount,
+            alternativeTimeInterval:alternativeTimeInterval
+          });
           if (!isTimeIntervalCollision([...time_interval_list, ...alternativeTimeInterval])) {
             let newDay = new Date(alternativeTimeInterval[0].start);
             let newCourse = { ...course };
@@ -398,6 +429,18 @@ app.post("/api/addactivity", (req, res) => {
             newCourse.startTime = newDay.getHours();
             alternativeTimeIntervals.push(newCourse);
           }
+        }
+        badcaseList.sort((a,b)=>a.count-b.count);
+        for(const badcase of badcaseList){
+          if(alternativeTimeIntervals.length>=3) break;
+          let alternativeTimeInterval=badcase.alternativeTimeInterval;
+          //以下部分随不同重复类型而改变
+          let newDay = new Date(alternativeTimeInterval[0].start);
+            let newCourse = { ...course };
+            newCourse.repeat.weekday = newDay.getDay() - 1;//这个方法返回一周中的第几天
+            if (newCourse.repeat.weekday == -1) newCourse.repeat.weekday = 6;//这是为了让周一变成0，周日变成6
+            newCourse.startTime = newDay.getHours();
+            if(course.collective) alternativeTimeIntervals.push(newCourse);
         }
         return res.send(alternativeTimeIntervals);
         // return dealAlternativeSend(alternativeTimeIntervals,i,course,res);
@@ -412,6 +455,11 @@ app.post("/api/addactivity", (req, res) => {
         for (i = 1; alternativeTimeIntervals.length <= 3; i++) {
           let alternativeTimeInterval = [];
           for (let TimeIntervalCount = 0; TimeIntervalCount < proposedTimeIntervals.length; TimeIntervalCount++) alternativeTimeInterval.push({ start: proposedTimeIntervals[TimeIntervalCount].start + 3600 * 1000 * i, end: proposedTimeIntervals[TimeIntervalCount].end + 3600 * 1000 * i })
+          badcasecount=countCollision([...time_interval_list, ...alternativeTimeInterval]);
+          if(badcasecount) badcaseList.push({
+            count:badcasecount,
+            alternativeTimeInterval:alternativeTimeInterval
+          });
           if (!isTimeIntervalCollision([...time_interval_list, ...alternativeTimeInterval])) {
             let newDay = new Date(alternativeTimeInterval[0].start);
             let newCourse = { ...course };
@@ -429,6 +477,27 @@ app.post("/api/addactivity", (req, res) => {
             newCourse.startTime = newDay.getHours();
             alternativeTimeIntervals.push(newCourse);
           }
+        }
+        badcaseList.sort((a,b)=>a.count-b.count);
+        for(const badcase of badcaseList){
+          if(alternativeTimeIntervals.length>=3) break;
+          let alternativeTimeInterval=badcase.alternativeTimeInterval;
+          //以下部分随不同重复类型而改变
+          let newDay = new Date(alternativeTimeInterval[0].start);
+            let newCourse = { ...course };
+            newCourse.repeat.startDay = {
+              year: newDay.getFullYear(),
+              month: newDay.getMonth(),
+              day: newDay.getDate()
+            };
+            newDay = new Date(alternativeTimeInterval[alternativeTimeInterval.length - 1].start);
+            newCourse.repeat.endDay = {
+              year: newDay.getFullYear(),
+              month: newDay.getMonth(),
+              day: newDay.getDate()
+            };
+            newCourse.startTime = newDay.getHours();
+            if(course.collective) alternativeTimeIntervals.push(newCourse);
         }
         return res.send(alternativeTimeIntervals);
         // return dealAlternativeSend(alternativeTimeIntervals,i,course,res);

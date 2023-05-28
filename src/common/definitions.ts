@@ -61,6 +61,7 @@ export interface Activity {
         endWeek: number;
     }
     placeInfo: PlaceInfo;
+    collective: boolean;//是否是集体活动
 }
 
 export interface Tempwork {
