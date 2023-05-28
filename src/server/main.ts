@@ -17,7 +17,8 @@ let url = require("url");
 // console.log(new Date());
 const isAtPresent = false;
 let is_time_interval_list_structed = false;
-
+let recentID = 0;
+let inDealingTempwork = false;
 const app = express();
 
 let users: User[];
@@ -139,6 +140,7 @@ app.get("/api/users", (_, res) => {
 app.get("/api/schedule", (req, res) => {
   console.log(withStudentsActivity);
   let params = url.parse(req.url, true).query;
+  recentID = parseInt(params.id);
   res.send(structSchedule(params.id));
 });
 
@@ -152,21 +154,21 @@ app.get("/api/shortestPath", (req, res) => {
 });
 /*以上为基础操作*/
 
-let mymap:Location[]=[];
+let mymap: Location[] = [];
 fse.readFile("src/server/map.json").then((data) => {
-    mymap=(JSON.parse(data.toString()));
-    // console.log(findTSP([mymap[1],mymap[92],mymap[97],mymap[123],mymap[57],mymap[2],mymap[91],mymap[125],mymap[90],mymap[129]]));
+  mymap = (JSON.parse(data.toString()));
+  // console.log(findTSP([mymap[1],mymap[92],mymap[97],mymap[123],mymap[57],mymap[2],mymap[91],mymap[125],mymap[90],mymap[129]]));
 });
 //tsp api
-app.post("/api/tsp",(req,res)=>{
-    let body=req.body.idlist;
-    let locations:Location[]=[];
-    for(let i=0;i<body.length;i++){
-        locations.push(mymap[body[i]]);
-    }
-    findTSP(locations).then((data)=>{
-        res.send(data);
-    });
+app.post("/api/tsp", (req, res) => {
+  let body = req.body.idlist;
+  let locations: Location[] = [];
+  for (let i = 0; i < body.length; i++) {
+    locations.push(mymap[body[i]]);
+  }
+  findTSP(locations).then((data) => {
+    res.send(data);
+  });
 })
 
 /*以下为course增删改操作*/
@@ -227,15 +229,22 @@ app.post("/api/addactivity", (req, res) => {
   let nextID = 0;
   let proposedTimeIntervals = [];
   let alternativeTimeIntervals = [];
+  structSchedule(recentID.toString());//强制算一遍time_interval_list
   console.log("enter activity");
   switch (body.msg.repeat.type) {
     case "once":
+      console.log(time_interval_list);
       proposedTimeIntervals.push(convertToTimeInterval(course.repeat.day, course.startTime, 1));
       if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
         for (let i = 1; alternativeTimeIntervals.length <= 3; i++) {
-          let alternativeTimeInterval = convertToTimeInterval(course.repeat.day, course.startTime + i, 1);
-          if (!isTimeIntervalCollision([...time_interval_list, alternativeTimeInterval])) {
-            let newDay = new Date(alternativeTimeInterval.start);
+          console.log("p1 " + i);
+          let alternativeTimeInterval: time_interval[] = [];
+          alternativeTimeInterval.push(convertToTimeInterval(course.repeat.day, course.startTime + i, 1));
+          // console.log(alternativeTimeInterval);
+          // console.log(time_interval_list);
+          if (!isTimeIntervalCollision([...time_interval_list, ...alternativeTimeInterval])) {
+            console.log("p2 " + i);
+            let newDay = new Date(alternativeTimeInterval[0].start);
             let newCourse = { ...course };
             newCourse.repeat.day = {
               year: newDay.getFullYear(),
@@ -284,7 +293,7 @@ app.post("/api/addactivity", (req, res) => {
       break;
     case "daily":
       for (let i = (dayToDate(course.repeat.endDay).getTime() - dayToDate(course.repeat.startDay).getTime()) / (24 * 3600 * 1000); i >= 0; i--)
-        proposedTimeIntervals.push(convertToTimeInterval(course.repeat.day, course.startTime + 24 * i, 1));
+        proposedTimeIntervals.push(convertToTimeInterval(course.repeat.startDay, course.startTime + 24 * i, 1));
       if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
         for (let i = 1; alternativeTimeIntervals.length <= 3; i++) {
           let alternativeTimeInterval = [];
@@ -348,103 +357,104 @@ app.post("/api/updactivity", (req, res) => {
   let body = req.body;
   let course = body.msg;
   //以下开始检测
-  
+
 
   if (course.id in withStudentsActivity) {
     //先复制一份活动，然后把这个活动删掉，检测新的活动有没有时间冲突，如果有，再把老活动加回去；如果没冲突，就把新活动加进去
-    let oldCourse =JSON.parse(JSON.stringify(withStudentsActivity[course.id])) ;
+    let oldCourse = JSON.parse(JSON.stringify(withStudentsActivity[course.id]));
     delete withStudentsActivity[course.id];
-
+    console.log(time_interval_list.length);
+    structSchedule(recentID.toString());//这是在删除活动后，强制地再算一次time_interval_list
     let proposedTimeIntervals = [];
-  let alternativeTimeIntervals = [];
-  console.log("enter activity");
-  switch (body.msg.repeat.type) {
-    case "once":
-      proposedTimeIntervals.push(convertToTimeInterval(course.repeat.day, course.startTime, 1));
-      if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
-        for (let i = 1; alternativeTimeIntervals.length <= 3; i++) {
-          let alternativeTimeInterval = convertToTimeInterval(course.repeat.day, course.startTime + i, 1);
-          if (!isTimeIntervalCollision([...time_interval_list, alternativeTimeInterval])) {
-            let newDay = new Date(alternativeTimeInterval.start);
-            let newCourse = { ...course };
-            newCourse.repeat.day = {
-              year: newDay.getFullYear(),
-              month: newDay.getMonth(),
-              day: newDay.getDate()
-            };
-            newCourse.startTime = newDay.getHours();
-            alternativeTimeIntervals.push(newCourse);
+    let alternativeTimeIntervals = [];
+    console.log("enter activity");
+    switch (body.msg.repeat.type) {
+      case "once":
+        proposedTimeIntervals.push(convertToTimeInterval(course.repeat.day, course.startTime, 1));
+        if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
+          for (let i = 1; alternativeTimeIntervals.length <= 3; i++) {
+            let alternativeTimeInterval = convertToTimeInterval(course.repeat.day, course.startTime + i, 1);
+            if (!isTimeIntervalCollision([...time_interval_list, alternativeTimeInterval])) {
+              let newDay = new Date(alternativeTimeInterval.start);
+              let newCourse = { ...course };
+              newCourse.repeat.day = {
+                year: newDay.getFullYear(),
+                month: newDay.getMonth(),
+                day: newDay.getDate()
+              };
+              newCourse.startTime = newDay.getHours();
+              alternativeTimeIntervals.push(newCourse);
+            }
           }
+          withStudentsActivity[course.id] = oldCourse;
+          return res.send(alternativeTimeIntervals);
         }
-        withStudentsActivity[course.id] = oldCourse;
-        return res.send(alternativeTimeIntervals);
-      }
-      else time_interval_list.push(...proposedTimeIntervals);
-      break;
+        else time_interval_list.push(...proposedTimeIntervals);
+        break;
 
-    case "weekly":
-      console.log("dealing weekly");
-      for (let i = course.repeat.startWeek; i <= course.repeat.endWeek; i++) {
-        console.log("p1 " + i);
-        proposedTimeIntervals.push(TimeStampConvertToTimeInterval(dayToDate(schedule.firstDay).getTime() + i * 7 * 24 * 3600 * 1000 + course.repeat.weekday * 24 * 3600 * 1000 + course.startTime * 3600 * 1000, 1));
-      }
-      if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
-        console.log("p2");
-        for (let i = 1; alternativeTimeIntervals.length <= 3; i++) {
-          console.log("p3 " + i);
-          let alternativeTimeInterval = [];
-          for (let TimeIntervalCount = 0; TimeIntervalCount < proposedTimeIntervals.length; TimeIntervalCount++) {
-            alternativeTimeInterval.push({ start: proposedTimeIntervals[TimeIntervalCount].start + 3600 * 1000 * i, end: proposedTimeIntervals[TimeIntervalCount].end + 3600 * 1000 * i })
-            console.log("p4 " + i);
-            // if(!(i%5)) console.log(alternativeTimeInterval);
-          }
-          console.log("p5 ");
-          if (!isTimeIntervalCollision([...time_interval_list, ...alternativeTimeInterval])) {
-            let newDay = new Date(alternativeTimeInterval[0].start);
-            let newCourse = { ...course };
-            newCourse.repeat.weekday = newDay.getDay() - 1;//这个方法返回一周中的第几天
-            if (newCourse.repeat.weekday == -1) newCourse.repeat.weekday = 6;//这是为了让周一变成0，周日变成6
-            //我认为startweek和endweek应该不变，毕竟总能排到晚上去，如果要检查周数太麻烦了，先挖坑在此
-            newCourse.startTime = newDay.getHours();
-            alternativeTimeIntervals.push(newCourse);
-          }
+      case "weekly":
+        console.log("dealing weekly");
+        for (let i = course.repeat.startWeek; i <= course.repeat.endWeek; i++) {
+          console.log("p1 " + i);
+          proposedTimeIntervals.push(TimeStampConvertToTimeInterval(dayToDate(schedule.firstDay).getTime() + i * 7 * 24 * 3600 * 1000 + course.repeat.weekday * 24 * 3600 * 1000 + course.startTime * 3600 * 1000, 1));
         }
-        withStudentsActivity[course.id] = oldCourse;
-        return res.send(alternativeTimeIntervals);
-      }
-      else time_interval_list.push(...proposedTimeIntervals);
-      break;
-    case "daily":
-      for (let i = (dayToDate(course.repeat.endDay).getTime() - dayToDate(course.repeat.startDay).getTime()) / (24 * 3600 * 1000); i >= 0; i--)
-        proposedTimeIntervals.push(convertToTimeInterval(course.repeat.day, course.startTime + 24 * i, 1));
-      if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
-        for (let i = 1; alternativeTimeIntervals.length <= 3; i++) {
-          let alternativeTimeInterval = [];
-          for (let TimeIntervalCount = 0; TimeIntervalCount < proposedTimeIntervals.length; TimeIntervalCount++) alternativeTimeInterval.push({ start: proposedTimeIntervals[TimeIntervalCount].start + 3600 * 1000 * i, end: proposedTimeIntervals[TimeIntervalCount].end + 3600 * 1000 * i })
-          if (!isTimeIntervalCollision([...time_interval_list, ...alternativeTimeInterval])) {
-            let newDay = new Date(alternativeTimeInterval[0].start);
-            let newCourse = { ...course };
-            newCourse.repeat.startDay = {
-              year: newDay.getFullYear(),
-              month: newDay.getMonth(),
-              day: newDay.getDate()
-            };
-            newDay = new Date(alternativeTimeInterval[alternativeTimeInterval.length - 1].start);
-            newCourse.repeat.endDay = {
-              year: newDay.getFullYear(),
-              month: newDay.getMonth(),
-              day: newDay.getDate()
-            };
-            newCourse.startTime = newDay.getHours();
-            alternativeTimeIntervals.push(newCourse);
+        if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
+          console.log("p2");
+          for (let i = 1; alternativeTimeIntervals.length <= 3; i++) {
+            console.log("p3 " + i);
+            let alternativeTimeInterval = [];
+            for (let TimeIntervalCount = 0; TimeIntervalCount < proposedTimeIntervals.length; TimeIntervalCount++) {
+              alternativeTimeInterval.push({ start: proposedTimeIntervals[TimeIntervalCount].start + 3600 * 1000 * i, end: proposedTimeIntervals[TimeIntervalCount].end + 3600 * 1000 * i })
+              console.log("p4 " + i);
+              // if(!(i%5)) console.log(alternativeTimeInterval);
+            }
+            console.log("p5 ");
+            if (!isTimeIntervalCollision([...time_interval_list, ...alternativeTimeInterval])) {
+              let newDay = new Date(alternativeTimeInterval[0].start);
+              let newCourse = { ...course };
+              newCourse.repeat.weekday = newDay.getDay() - 1;//这个方法返回一周中的第几天
+              if (newCourse.repeat.weekday == -1) newCourse.repeat.weekday = 6;//这是为了让周一变成0，周日变成6
+              //我认为startweek和endweek应该不变，毕竟总能排到晚上去，如果要检查周数太麻烦了，先挖坑在此
+              newCourse.startTime = newDay.getHours();
+              alternativeTimeIntervals.push(newCourse);
+            }
           }
+          withStudentsActivity[course.id] = oldCourse;
+          return res.send(alternativeTimeIntervals);
         }
-        withStudentsActivity[course.id] = oldCourse;
-        return res.send(alternativeTimeIntervals);
-      }
-      else time_interval_list.push(...proposedTimeIntervals);
-      break;
-  }
+        else time_interval_list.push(...proposedTimeIntervals);
+        break;
+      case "daily":
+        for (let i = (dayToDate(course.repeat.endDay).getTime() - dayToDate(course.repeat.startDay).getTime()) / (24 * 3600 * 1000); i >= 0; i--)
+          proposedTimeIntervals.push(convertToTimeInterval(course.repeat.startDay, course.startTime + 24 * i, 1));
+        if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
+          for (let i = 1; alternativeTimeIntervals.length <= 3; i++) {
+            let alternativeTimeInterval = [];
+            for (let TimeIntervalCount = 0; TimeIntervalCount < proposedTimeIntervals.length; TimeIntervalCount++) alternativeTimeInterval.push({ start: proposedTimeIntervals[TimeIntervalCount].start + 3600 * 1000 * i, end: proposedTimeIntervals[TimeIntervalCount].end + 3600 * 1000 * i })
+            if (!isTimeIntervalCollision([...time_interval_list, ...alternativeTimeInterval])) {
+              let newDay = new Date(alternativeTimeInterval[0].start);
+              let newCourse = { ...course };
+              newCourse.repeat.startDay = {
+                year: newDay.getFullYear(),
+                month: newDay.getMonth(),
+                day: newDay.getDate()
+              };
+              newDay = new Date(alternativeTimeInterval[alternativeTimeInterval.length - 1].start);
+              newCourse.repeat.endDay = {
+                year: newDay.getFullYear(),
+                month: newDay.getMonth(),
+                day: newDay.getDate()
+              };
+              newCourse.startTime = newDay.getHours();
+              alternativeTimeIntervals.push(newCourse);
+            }
+          }
+          withStudentsActivity[course.id] = oldCourse;
+          return res.send(alternativeTimeIntervals);
+        }
+        else time_interval_list.push(...proposedTimeIntervals);
+        break;
+    }
 
     withStudentsActivity[course.id] = course;
     com_withStudentsActivity[Object.keys(com_withStudentsActivity).length + 1] = body;
@@ -462,7 +472,9 @@ app.post("/api/addtempwork", (req, res) => {
   let body = req.body;
   let course = body.msg;
   let nextID = 0;
-  /*
+  inDealingTempwork = true;
+  structSchedule(recentID.toString());//强制算一遍没有tempwork的time_interval_list
+  inDealingTempwork = false;
   let proposedTimeIntervals = [];
   let alternativeTimeIntervals = [];
   proposedTimeIntervals.push(convertToTimeInterval(course.day, course.time, 1));
@@ -484,8 +496,16 @@ app.post("/api/addtempwork", (req, res) => {
     }
     return res.send(alternativeTimeIntervals);
   }
-  else time_interval_list.push(...proposedTimeIntervals);
-  */
+  else {
+    structSchedule(recentID.toString());//强制算一遍有tempwork的time_interval_list
+    // console.log("p1  time_interval_list: ");
+    // console.log(time_interval_list);
+    // console.log("p1  proposedTimeIntervals: " );
+    // console.log(proposedTimeIntervals);
+    if (!isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals]))
+      time_interval_list.push(...proposedTimeIntervals);
+  }
+
   for (const [key, value] of Object.entries(withStudentsTempwork)) {
     if (parseInt(key) > nextID) nextID = parseInt(key);
     // if (value.name == course.name) return res.status(401).send("already exist");
@@ -520,6 +540,37 @@ app.post("/api/deltempwork", (req, res) => {
 app.post("/api/updtempwork", (req, res) => {
   let body = req.body;
   let course = body.msg;
+
+  inDealingTempwork = true;
+  structSchedule(recentID.toString());//强制算一遍没有tempwork的time_interval_list
+  inDealingTempwork = false;
+  let proposedTimeIntervals = [];
+  let alternativeTimeIntervals = [];
+  proposedTimeIntervals.push(convertToTimeInterval(course.day, course.time, 1));
+  console.log(proposedTimeIntervals);
+  if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
+    for (let i = 1; alternativeTimeIntervals.length <= 3; i++) {
+      let alternativeTimeInterval = convertToTimeInterval(course.day, course.time + i, 1);
+      if (!isTimeIntervalCollision([...time_interval_list, alternativeTimeInterval])) {
+        let newDay = new Date(alternativeTimeInterval.start);
+        let newCourse = { ...course };
+        newCourse.day = {
+          year: newDay.getFullYear(),
+          month: newDay.getMonth(),
+          day: newDay.getDate()
+        };
+        newCourse.time = newDay.getHours();
+        alternativeTimeIntervals.push(newCourse);
+      }
+    }
+    return res.send(alternativeTimeIntervals);
+  }
+  else {
+    structSchedule(recentID.toString());//强制算一遍有tempwork的time_interval_list
+    if (!isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals]))
+      time_interval_list.push(...proposedTimeIntervals);
+  }
+
   if (course.id in withStudentsTempwork) {
     withStudentsTempwork[course.id] = course;
     com_withStudentsTempwork[Object.keys(com_withStudentsTempwork).length + 1] = body;
@@ -550,6 +601,7 @@ ViteExpress.listen(app, 3000, () =>
 
 //构造schedule
 function structSchedule(id: String): Schedule {
+  time_interval_list = [];
   let mySchedule = JSON.parse(JSON.stringify(schedule));
   for (const [key, value] of Object.entries(withStudentsCourse)) {
     for (const student of value.students) {
@@ -557,17 +609,17 @@ function structSchedule(id: String): Schedule {
         if (isAtPresent && value.name.includes("喵喵")) continue;
         value["id"] = key;
         mySchedule.courses.push(value);
-        if(!is_time_interval_list_structed){//如果还没有构造过time_interval_list，才构造它
-        for (let i = value.startWeek; i <= value.endWeek; i++)
-          time_interval_list.push({
-            start: dayToDate(schedule.firstDay).getTime() + i * 7 * 24 * 3600 * 1000 + value.weekday * 24 * 3600 * 1000 + value.startTime * 3600 * 1000,
-            end: dayToDate(schedule.firstDay).getTime() + i * 7 * 24 * 3600 * 1000 + value.weekday * 24 * 3600 * 1000 + (value.startTime + value.duration) * 3600 * 1000
-          });
-        if (value.examInfo)
-          time_interval_list.push({
-            start: dayToDate(value.examInfo.day).getDate() + value.examInfo.startTime * 3600 * 1000,
-            end: dayToDate(value.examInfo.day).getDate() + (value.examInfo.startTime + value.examInfo.duration) * 3600 * 1000
-          });
+        if (!is_time_interval_list_structed) {//如果还没有构造过time_interval_list，才构造它
+          for (let i = value.startWeek; i <= value.endWeek; i++)
+            time_interval_list.push({
+              start: dayToDate(schedule.firstDay).getTime() + i * 7 * 24 * 3600 * 1000 + value.weekday * 24 * 3600 * 1000 + value.startTime * 3600 * 1000,
+              end: dayToDate(schedule.firstDay).getTime() + i * 7 * 24 * 3600 * 1000 + value.weekday * 24 * 3600 * 1000 + (value.startTime + value.duration) * 3600 * 1000
+            });
+          if (value.examInfo)
+            time_interval_list.push({
+              start: dayToDate(value.examInfo.day).getDate() + value.examInfo.startTime * 3600 * 1000,
+              end: dayToDate(value.examInfo.day).getDate() + (value.examInfo.startTime + value.examInfo.duration) * 3600 * 1000
+            });
         }
       }
     }
@@ -578,30 +630,30 @@ function structSchedule(id: String): Schedule {
         if (isAtPresent && value.name.includes("喵喵")) continue;
         value["id"] = key;
         mySchedule.activities.push(value);
-        if(!is_time_interval_list_structed){
-        switch (value.repeat.type) {
-          case "once":
-            time_interval_list.push({
-              start: dayToDate(value.repeat.day).getTime() + value.startTime * 3600 * 1000,
-              end: dayToDate(value.repeat.day).getTime() + (value.startTime + 1) * 3600 * 1000
-            });
-            break;
-          case "weekly":
-            for (let i = value.repeat.startWeek; i <= value.repeat.endWeek; i++)
+        if (!is_time_interval_list_structed) {
+          switch (value.repeat.type) {
+            case "once":
               time_interval_list.push({
-                start: dayToDate(schedule.firstDay).getTime() + i * 7 * 24 * 3600 * 1000 + value.repeat.weekday * 24 * 3600 * 1000 + value.startTime * 3600 * 1000,
-                end: dayToDate(schedule.firstDay).getTime() + i * 7 * 24 * 3600 * 1000 + value.repeat.weekday * 24 * 3600 * 1000 + (value.startTime + 1) * 3600 * 1000
+                start: dayToDate(value.repeat.day).getTime() + value.startTime * 3600 * 1000,
+                end: dayToDate(value.repeat.day).getTime() + (value.startTime + 1) * 3600 * 1000
               });
-            break;
-          case "daily":
-            for (let i = dayToDate(value.repeat.startDay).getTime(); i <= dayToDate(value.repeat.endDay).getTime(); i += 24 * 3600 * 1000)
-              time_interval_list.push({
-                start: i + value.startTime * 3600 * 1000,
-                end: i + (value.startTime + 1) * 3600 * 1000
-              });
-            break;
+              break;
+            case "weekly":
+              for (let i = value.repeat.startWeek; i <= value.repeat.endWeek; i++)
+                time_interval_list.push({
+                  start: dayToDate(schedule.firstDay).getTime() + i * 7 * 24 * 3600 * 1000 + value.repeat.weekday * 24 * 3600 * 1000 + value.startTime * 3600 * 1000,
+                  end: dayToDate(schedule.firstDay).getTime() + i * 7 * 24 * 3600 * 1000 + value.repeat.weekday * 24 * 3600 * 1000 + (value.startTime + 1) * 3600 * 1000
+                });
+              break;
+            case "daily":
+              for (let i = dayToDate(value.repeat.startDay).getTime(); i <= dayToDate(value.repeat.endDay).getTime(); i += 24 * 3600 * 1000)
+                time_interval_list.push({
+                  start: i + value.startTime * 3600 * 1000,
+                  end: i + (value.startTime + 1) * 3600 * 1000
+                });
+              break;
+          }
         }
-      }
       }
     }
   }
@@ -611,19 +663,21 @@ function structSchedule(id: String): Schedule {
         if (isAtPresent && value.name.includes("喵喵")) continue;
         value["id"] = key;
         mySchedule.tempworks.push(value);
-        if(!is_time_interval_list_structed){
-        time_interval_list.push({
-          start: dayToDate(value.day).getTime() + value.time * 3600 * 1000,
-          end: dayToDate(value.day).getTime() + (value.time + 1) * 3600 * 1000
-        });
-      }
+        if (!is_time_interval_list_structed && !inDealingTempwork) {
+          let t={
+            start: dayToDate(value.day).getTime() + value.time * 3600 * 1000,
+            end: dayToDate(value.day).getTime() + (value.time + 1) * 3600 * 1000
+          };
+          if(!isTimeIntervalCollision([...time_interval_list,t]))
+            time_interval_list.push(t);
+        }
       }
     }
   }
   time_interval_list.sort((a, b) => a.start - b.start);//基于start升序排列
   console.log("struct!");
   console.log(time_interval_list);
-  is_time_interval_list_structed = true;
+  is_time_interval_list_structed = false;
   return mySchedule;
 }
 
