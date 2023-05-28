@@ -366,6 +366,11 @@ export default {
         this.formData.endWeek = this.formData.startWeek;
       }
     },
+    'formData.endWeek'() {
+      if (this.formData.endWeek < this.formData.startWeek) {
+        this.formData.startWeek = this.formData.endWeek;
+      }
+    },
   },
   mounted() {
     dialogs.detailDialog = this;

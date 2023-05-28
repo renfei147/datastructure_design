@@ -42,7 +42,10 @@ export default {
             })
         })
         const data = await res.text();
-        if (data == 'success') return true;
+        if (data == 'success') {
+            fetch('/api/savechanges');
+            return true;
+        }
         return JSON.parse(data) as DataContent[];
     },
     async update(type: DataType, content: DataContent) {
@@ -57,7 +60,10 @@ export default {
             })
         })
         const data = await res.text();
-        if (data == 'success') return true;
+        if (data == 'success') {
+            fetch('/api/savechanges');
+            return true;
+        }
         return JSON.parse(data) as DataContent[];
     },
     async del(type: DataType, id: string) {

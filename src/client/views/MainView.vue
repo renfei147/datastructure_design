@@ -24,7 +24,7 @@
     </el-button-group>
   </el-menu>
 
-  <div v-if="activeTab === 'calendar'" class="calendar-container">
+  <div v-if="activeTab === 'calendar'" class="container">
     <Calendar class="small" :events="scheduler?.events" :now="now" />
   </div>
   <div v-else-if="activeTab === 'course'" class="container">
@@ -115,12 +115,6 @@
 </template>
 
 <style scoped>
-.calendar-container {
-  width: 65%;
-  margin: 0 auto;
-  padding-top: 60px;
-}
-
 .container {
   width: 80%;
   margin: 0 auto;

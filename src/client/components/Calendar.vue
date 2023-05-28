@@ -47,7 +47,7 @@ export default {
         locales: [zhcnLocale],
         locale: 'zh-cn',
         allDaySlot: false,
-        aspectRatio: 1.5,
+        aspectRatio: 1.8,
         eventClick(info) {
           dialogs.detailDialog?.open(info.event.extendedProps['sourceType'], 'readonly', info.event.extendedProps['source'], async () => true);
         }
