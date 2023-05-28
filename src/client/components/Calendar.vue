@@ -49,7 +49,7 @@ export default {
         allDaySlot: false,
         aspectRatio: 1.5,
         eventClick(info) {
-          dialogs.detailDialog?.open(info.event.extendedProps['sourceType'], 'readonly', info.event.extendedProps['source']);
+          dialogs.detailDialog?.open(info.event.extendedProps['sourceType'], 'readonly', info.event.extendedProps['source'], async () => true);
         }
       } as CalendarOptions
     }

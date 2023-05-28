@@ -32,12 +32,12 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="日期" v-if="formData.repeat === 'once'">
-          <el-date-picker v-model="formData.day" type="date" />
+          <el-date-picker v-model="formData.day" type="date" :clearable="false" />
         </el-form-item>
         <el-form-item label="日期" v-if="formData.repeat === 'daily'">
-          <el-date-picker v-model="formData.startDay" type="date" />
+          <el-date-picker v-model="formData.startDay" type="date" :clearable="false" />
           <span style="margin: 0 10px;">-</span>
-          <el-date-picker v-model="formData.endDay" type="date" />
+          <el-date-picker v-model="formData.endDay" type="date" :clearable="false" />
         </el-form-item>
         <el-form-item label="日期" v-if="formData.repeat === 'weekly'">
           从第
@@ -66,11 +66,13 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="地点" v-if="formData.placeType == 'offline'">
-        <el-input v-model="formData.placeId" style="width:150px;margin-right: 10px;" />
-        <el-input v-model="formData.placeDetail" style="width:150px;" />
+        <el-select v-model="formData.placeId" filterable placeholder="选择地点" style="width:150px;margin-right: 10px;">
+          <el-option v-for="i in displayLocations" :key="i.id" :label="i.name" :value="i.id" />
+        </el-select>
+        <el-input v-model="formData.placeDetail" style="width:150px;" placeholder="备注（如教室号）" />
       </el-form-item>
       <el-form-item label="在线链接" v-if="formData.placeType == 'online'">
-        <el-input v-model="formData.placeLink" />
+        <el-input v-model="formData.placeLink" style="width:400px;" />
       </el-form-item>
       <el-form-item label="考试安排" v-if="type === 'course'">
         <el-radio-group v-model="formData.exam.exist">
@@ -80,7 +82,7 @@
       </el-form-item>
       <template v-if="formData.exam.exist">
         <el-form-item label="考试日期">
-          <el-date-picker v-model="formData.exam.day" type="date" />
+          <el-date-picker v-model="formData.exam.day" type="date" :clearable="false" />
         </el-form-item>
         <el-form-item label="考试时间">
           <el-time-select v-model="formData.exam.startTime" start="8:00" step="1:00" end="19:00" format="H:mm"
@@ -96,8 +98,11 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="考试地点" v-if="formData.exam.placeType == 'offline'">
-          <el-input v-model="formData.exam.placeId" style="width:150px;margin-right: 10px;" />
-          <el-input v-model="formData.exam.placeDetail" style="width:150px;" />
+          <el-select v-model="formData.exam.placeId" filterable placeholder="选择地点"
+            style="width:150px;margin-right: 10px;">
+            <el-option v-for="i in displayLocations" :key="i.id" :label="i.name" :value="i.id" />
+          </el-select>
+          <el-input v-model="formData.exam.placeDetail" style="width:150px;" placeholder="备注（如教室号）" />
         </el-form-item>
         <el-form-item label="考试链接" v-if="formData.exam.placeType == 'online'">
           <el-input v-model="formData.exam.placeLink" />
@@ -106,7 +111,7 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="cancel" v-if="mode !== 'readonly'">取消</el-button>
+        <el-button @click="visible = false" v-if="mode !== 'readonly'">取消</el-button>
         <el-button type="primary" @click="confirm">
           确认
         </el-button>
@@ -119,7 +124,7 @@ import { Activity, Course, Tempwork } from '../../common/definitions';
 import { dialogs } from '../services/dialogs';
 import { dayToDate, dateToDay } from '../../common/day';
 import { FormInstance } from 'element-plus';
-
+import { displayLocations } from '../services/map'
 
 const initialFormData = {
   id: '',
@@ -169,19 +174,21 @@ export default {
         { key: 5, value: '周六' },
         { key: 6, value: '周日' }
       ],
-      resolve: (a: Course | null) => { },
+      callback: null as (null | ((res: any) => Promise<boolean>)),
       rules: {
         name: [
           { required: true, message: '名称不能为空', trigger: 'blur' },
           { max: 50, message: '长度不能超过50字符', trigger: 'blur' },
         ],
-      }
+      },
+      displayLocations
     }
   },
   methods: {
-    async open(type: 'course' | 'activity' | 'tempwork',
+    open(type: 'course' | 'activity' | 'tempwork',
       mode: 'readonly' | 'edit' | 'new',
-      init: Course | Activity | Tempwork | null = null) {
+      init: Course | Activity | Tempwork | null,
+      callback: (res: any) => Promise<boolean>) {
       this.visible = true;
       this.type = type;
       this.mode = mode;
@@ -213,6 +220,7 @@ export default {
             this.formData.exam.day = dayToDate(course.examInfo.day);
             this.formData.exam.startTime = course.examInfo.startTime + ':00';
             this.formData.exam.endTime = (course.examInfo.startTime + course.examInfo.duration) + ':00';
+            this.formData.exam.placeType = course.examInfo.placeInfo.type;
             if (course.examInfo.placeInfo.type === 'offline') {
               this.formData.exam.placeId = course.examInfo.placeInfo.id;
               this.formData.exam.placeDetail = course.examInfo.placeInfo.detail;
@@ -240,17 +248,10 @@ export default {
           this.formData.day = dayToDate(tempwork.day);
         }
       }
-      return new Promise<Course | Activity | Tempwork | null>((resolve, reject) => {
-        this.resolve = resolve;
-      })
-    },
-    cancel() {
-      this.visible = false;
-      this.resolve(null);
+      this.callback = callback;
     },
     async confirm() {
       if (!await (this.$refs.form as FormInstance).validate()) return;
-      this.visible = false;
       const result: any = {
         id: this.formData.id,
         name: this.formData.name,
@@ -298,7 +299,8 @@ export default {
         result.time = this.strToTime(this.formData.startTime);
         result.day = dateToDay(this.formData.day);
       }
-      this.resolve(result);
+      if (this.callback && await this.callback(result)) this.visible = false;
+
     },
     strToTime(str: string) {
       return parseInt(str.substring(0, str.length - 3));

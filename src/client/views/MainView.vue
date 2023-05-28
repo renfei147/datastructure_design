@@ -7,8 +7,9 @@
     <el-button text @click="logout">退出</el-button>
     <div class="flex-grow"></div>
     <el-menu-item class="menu-item" index="1" @click="activeTab = 'calendar'">日程表</el-menu-item>
-    <el-menu-item class="menu-item" index="2" @click="activeTab = 'management'">事务管理</el-menu-item>
-    <el-menu-item class="menu-item" index="3" @click="activeTab = 'map'">地图</el-menu-item>
+    <el-menu-item class="menu-item" index="2" @click="activeTab = 'course'">课程管理</el-menu-item>
+    <el-menu-item class="menu-item" index="3" @click="activeTab = 'management'">事务管理</el-menu-item>
+    <el-menu-item class="menu-item" index="4" @click="activeTab = 'map'">地图</el-menu-item>
     <div class="flex-grow"></div>
     <el-icon>
       <Clock />
@@ -23,58 +24,76 @@
     </el-button-group>
   </el-menu>
 
-  <div class="container">
-    <div v-if="activeTab === 'calendar'">
-      <Calendar class="small" :events="scheduler?.events" :now="now" />
-    </div>
-    <div v-else-if="activeTab === 'management'">
-      <div style="display:flex;">
-        <el-popover width="200px">
-          <template #reference>
-            <el-button type="primary">
-              <el-icon>
-                <Plus />
-              </el-icon>
-              添加
-            </el-button>
-          </template>
-          <div>
-            <el-button-group>
-              <el-button @click="addActivity">课外活动</el-button>
-              <el-button @click="addTempwork">临时事务</el-button>
-            </el-button-group>
-          </div>
-        </el-popover>
-        <el-input class="flex-grow" style="margin-left: 10px;" v-model="searchInput" placeholder="查找名称">
-          <template #prefix>
+  <div v-if="activeTab === 'calendar'" class="calendar-container">
+    <Calendar class="small" :events="scheduler?.events" :now="now" />
+  </div>
+  <div v-else-if="activeTab === 'course'" class="container">
+    <el-table :data="courseTableData" stripe style="width: 100%">
+      <el-table-column prop="id" label="编号" width="100" sortable />
+      <el-table-column prop="name" label="名称" sortable />
+      <el-table-column prop="time" label="上课时间" width="250" sortable />
+      <el-table-column prop="place" label="上课地点" width="250" sortable />
+      <el-table-column prop="exam" label="考试" width="250" sortable />
+    </el-table>
+  </div>
+  <div v-else-if="activeTab === 'management'" class="container">
+    <div style="display:flex;">
+      <el-popover width="200px">
+        <template #reference>
+          <el-button type="primary">
             <el-icon>
-              <Search />
+              <Plus />
             </el-icon>
+            添加
+          </el-button>
+        </template>
+        <div>
+          <el-button-group>
+            <el-button @click="addActivity">课外活动</el-button>
+            <el-button @click="addTempwork">临时事务</el-button>
+          </el-button-group>
+        </div>
+      </el-popover>
+      <el-input class="flex-grow" style="margin-left: 10px;" v-model="searchInput" placeholder="查找名称">
+        <template #prefix>
+          <el-icon>
+            <Search />
+          </el-icon>
+        </template>
+      </el-input>
+    </div>
+    <el-table :data="filterTableData" stripe>
+      <el-table-column prop="type" label="类型" width="100" sortable />
+      <el-table-column prop="name" label="名称" sortable />
+      <el-table-column prop="time" label="时间" width="250" sortable />
+      <el-table-column prop="place" label="地点" width="250" sortable />
+      <el-table-column fixed="right" label="操作" width="120">
+        <template #default="scope">
+          <template v-if="scope.row.type == '课外活动'">
+            <el-button link type="primary" @click="editActivity(scope.row.source)">编辑</el-button>
+            <el-button link type="danger" @click="delActivity(scope.row.source)">删除</el-button>
           </template>
-        </el-input>
+          <template v-else>
+            <el-button link type="primary" @click="editTempwork(scope.row.source)">编辑</el-button>
+            <el-button link type="danger" @click="delTempwork(scope.row.source)">删除</el-button>
+          </template>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+  <div v-else class="container">
+    <div>
+      <div>
+        起点
+        <el-select v-model="startLocation" filterable placeholder="选择地点" style="width:150px;margin-right: 10px;">
+          <el-option v-for="i in displayLocations" :key="i.id" :label="i.name" :value="i.id" />
+        </el-select>
       </div>
-      <el-table :data="filterTableData" stripe>
-        <el-table-column prop="type" label="类型" width="100" />
-        <el-table-column prop="name" label="名称" width="200" />
-        <el-table-column prop="time" label="时间" />
-        <el-table-column prop="place" label="地点" />
-        <el-table-column fixed="right" label="操作" width="120">
-          <template #default="scope">
-            <template v-if="scope.row.type == '课外活动'">
-              <el-button link type="primary" @click="editActivity(scope.row.source)">编辑</el-button>
-              <el-button link type="danger" @click="delActivity(scope.row.source)">删除</el-button>
-            </template>
-            <template v-else>
-              <el-button link type="primary" @click="editTempwork(scope.row.source)">编辑</el-button>
-              <el-button link type="danger" @click="delTempwork(scope.row.source)">删除</el-button>
-            </template>
-          </template>
-        </el-table-column>
-      </el-table>
+      <div>
+        {{ endOrPassLocationsText }}
+      </div>
     </div>
-    <div v-else>
-      <MapComponent />
-    </div>
+    <MapComponent :path="path" />
   </div>
 
   <el-dialog v-model="dialogVisible" title="设置时间" width="400px">
@@ -87,8 +106,14 @@
 </template>
 
 <style scoped>
-.container {
+.calendar-container {
   width: 65%;
+  margin: 0 auto;
+  padding-top: 60px;
+}
+
+.container {
+  width: 80%;
   margin: 0 auto;
   padding-top: 60px;
 }
@@ -125,11 +150,14 @@
 import { ElMessageBox } from 'element-plus';
 import Calendar from '../components/Calendar.vue'
 import MapComponent from '../components/MapComponent.vue'
-import { Alarm, Scheduler } from '../services/core';
+import { AlarmData, Scheduler } from '../services/core';
 import data from '../services/data';
 import { User, Clock, Search, Plus } from '@element-plus/icons-vue'
-import { Activity, Schedule, Tempwork, activityToString, tempworkToString } from '../../common/definitions';
+import { Activity, Schedule, Tempwork } from '../../common/definitions';
 import { dialogs } from '../services/dialogs'
+import { dayToStr } from '../../common/day';
+import { courseToString, tempworkToString, activityToString, placeToStr } from '../services/format';
+import { displayLocations, mapInfo } from '../services/map';
 
 export default {
   components: {
@@ -151,11 +179,30 @@ export default {
       timerRunning: false,
       dialogVisible: false,
       activeName: 'first',
-      activeTab: 'calendar' as ('calendar' | 'management' | 'map'),
+      activeTab: 'calendar' as ('calendar' | 'course' | 'management' | 'map'),
       searchInput: '',
+      displayLocations,
+      pathType: 'none' as 'none' | 'shortest' | 'tsp',
+      startLocation: 0,
+      endLocation: 0,
+      passLocations: [] as number[],
+      path: [] as number[]
     }
   },
   computed: {
+    courseTableData() {
+      if (!this.schedule) return [];
+      return this.schedule.courses.map(i => ({
+        source: i,
+        id: i.id,
+        name: i.name,
+        time: courseToString(i),
+        place: placeToStr(i.placeInfo),
+        exam: i.examInfo
+          ? `${dayToStr(i.examInfo.day)} ${i.examInfo.startTime}:00-${i.examInfo.startTime + i.examInfo.duration}:00 ${placeToStr(i.examInfo.placeInfo)}`
+          : '未安排'
+      }))
+    },
     tableData() {
       if (!this.schedule) return [];
       const result = [];
@@ -165,9 +212,7 @@ export default {
           type: '临时事务',
           name: i.name,
           time: tempworkToString(i),
-          place: i.placeInfo.type === 'online'
-            ? `线上 ${i.placeInfo.link}`
-            : `${i.placeInfo.id}${i.placeInfo.detail}`,
+          place: placeToStr(i.placeInfo)
         })
       }
       for (const i of this.schedule.activities) {
@@ -176,9 +221,7 @@ export default {
           type: '课外活动',
           name: i.name,
           time: activityToString(i),
-          place: i.placeInfo.type === 'online'
-            ? `线上 ${i.placeInfo.link}`
-            : `${i.placeInfo.id}${i.placeInfo.detail}`,
+          place: placeToStr(i.placeInfo)
         })
       }
       return result;
@@ -189,6 +232,13 @@ export default {
           !this.searchInput ||
           data.name.toLowerCase().includes(this.searchInput.toLowerCase())
       )
+    },
+    endOrPassLocationsText() {
+      if (this.pathType == 'shortest') {
+        return "终点：" + mapInfo[this.endLocation].name;
+      } else {
+        return "途经点：" + this.passLocations.map(i => mapInfo[i].name).join(' ');
+      }
     }
   },
   methods: {
@@ -209,14 +259,40 @@ export default {
       }
     },
     tick() {
+      if (!this.scheduler) return;
       this.now += 60000;
-      const alarms = this.scheduler?.advanceNow(this.now);
-      if (alarms && alarms.length) this.raiseAlarms(alarms);
+      this.handleAlarm(this.scheduler.advanceNow(this.now));
     },
     nextHour() {
+      if (!this.scheduler) return;
       this.now += 60000 * 60;
-      const alarms = this.scheduler?.advanceNow(this.now);
-      if (alarms && alarms.length) this.raiseAlarms(alarms);
+      this.handleAlarm(this.scheduler.advanceNow(this.now));
+    },
+    handleAlarm(alarm: AlarmData) {
+      if (alarm.tomorrowEvents.length > 0) {
+        dialogs.tomorrowDialog?.open(alarm.tomorrowEvents);
+      }
+      if (alarm.events.length > 0) {
+        this.pathType = 'none';
+        dialogs.alarmDialog?.open(alarm.events, () => { this.activeTab = 'map' });
+        if (alarm.events[0].sourceType != 'tempwork') {
+          if (alarm.events[0].source.placeInfo.type == 'offline') {
+            this.pathType = 'shortest';
+            this.endLocation = alarm.events[0].source.placeInfo.id;
+          }
+        } else {
+          const locations = [];
+          for (const i of alarm.events) {
+            if (i.source.placeInfo.type == 'offline') {
+              locations.push(i.source.placeInfo.id);
+            }
+          }
+          if (locations.length > 0) {
+            this.pathType = 'tsp';
+            this.passLocations = locations;
+          }
+        }
+      }
     },
     setTime() {
       if (this.timerRunning) this.toggleTimer();
@@ -228,94 +304,108 @@ export default {
       this.now = this.pickerDate.getTime();
       this.scheduler?.resetNow(this.now);
     },
-    raiseAlarms(alarms: Alarm[]) {
-      for (const i of alarms) {
-        ElMessageBox.alert(i.description, '提醒')
-      }
+    addActivity() {
+      dialogs.detailDialog?.open('activity', 'new', null,
+        async (newActivity: Activity) => {
+          const res = await data.add('activity', {
+            ...newActivity,
+            students: [{
+              id: data.getUserId(),
+              name: this.username
+            }]
+          });
+          if (res == true) {
+            this.reloadSchedule();
+            return true;
+          } else {
+            const alt = res as Activity[];
+            let msg = "时间冲突，以下是备选时间：\n";
+            for (const i of alt) {
+              msg += `${activityToString(i)}\n`;
+            }
+            ElMessageBox.alert(msg, '提醒');
+            return false;
+          }
+        });
     },
-    async addActivity() {
-      const newActivity = await dialogs.detailDialog?.open('activity', 'new') as Activity;
-      const res = await data.add('activity', {
-        ...newActivity,
-        students: [{
-          id: data.getUserId(),
-          name: this.username
-        }]
-      });
-      if (res == true) {
-        this.reloadSchedule();
-      } else {
-        const alt = res as Activity[];
-        let msg = "时间冲突，以下是备选时间：\n";
-        for (const i of alt) {
-          msg += `${activityToString(i)}\n`;
+    editActivity(activity: Activity) {
+      dialogs.detailDialog?.open('activity', 'edit', activity,
+        async (newActivity: Activity) => {
+          const res = await data.update('activity', {
+            ...newActivity,
+            students: [{
+              id: data.getUserId(),
+              name: this.username
+            }]
+          });
+          if (res == true) {
+            this.reloadSchedule();
+            return true;
+          } else {
+            const alt = res as Activity[];
+            let msg = "时间冲突，以下是备选时间：\n";
+            for (const i of alt) {
+              msg += `${activityToString(i)}\n`;
+            }
+            ElMessageBox.alert(msg, '提醒');
+            return false;
+          }
         }
-        ElMessageBox.alert(msg, '提醒');
-      }
-    },
-    async editActivity(activity: Activity) {
-      const newActivity = await dialogs.detailDialog?.open('activity', 'edit', activity) as Activity;
-      const res = await data.update('activity', {
-        ...newActivity,
-        students: [{
-          id: data.getUserId(),
-          name: this.username
-        }]
-      });
-      if (res == true) {
-        this.reloadSchedule();
-      } else {
-        const alt = res as Activity[];
-        let msg = "时间冲突，以下是备选时间：\n";
-        for (const i of alt) {
-          msg += `${activityToString(i)}\n`;
-        }
-        ElMessageBox.alert(msg, '提醒');
-      }
+      );
     },
     async delActivity(activity: Activity) {
       await data.del('activity', activity.id);
       this.reloadSchedule();
     },
     async addTempwork() {
-      const newTempwork = await dialogs.detailDialog?.open('tempwork', 'new') as Tempwork;
-      const res = await data.add('tempwork', {
-        ...newTempwork,
-        students: [{
-          id: data.getUserId(),
-          name: this.username
-        }]
-      });
-      if (res == true) {
-        this.reloadSchedule();
-      } else {
-        const alt = res as Tempwork[];
-        let msg = "时间冲突，以下是备选时间：\n";
-        for (const i of alt) {
-          msg += `${tempworkToString(i)}\n`;
+      dialogs.detailDialog?.open('tempwork', 'new', null,
+        async (newTempwork: Tempwork) => {
+          const res = await data.add('tempwork', {
+            ...newTempwork,
+            students: [{
+              id: data.getUserId(),
+              name: this.username
+            }]
+          });
+          if (res == true) {
+            this.reloadSchedule();
+            return true;
+          } else {
+            const alt = res as Tempwork[];
+            let msg = "时间冲突，以下是备选时间：\n";
+            for (const i of alt) {
+              msg += `${tempworkToString(i)}\n`;
+            }
+            ElMessageBox.alert(msg, '提醒');
+            return false;
+          }
         }
-        ElMessageBox.alert(msg, '提醒');
-      }
+      );
     },
     async editTempwork(tempwork: Tempwork) {
-      const newTempwork = await dialogs.detailDialog?.open('tempwork', 'edit', tempwork) as Tempwork;
-      const res = await data.update('tempwork', {
-        ...newTempwork,
-        students: [{
-          id: data.getUserId(),
-          name: this.username
-        }]
-      });
-      if (res == true) {
-        this.reloadSchedule();
-      } else {
-        const alt = res as Tempwork[];
-        let msg = "时间冲突，以下是备选时间：\n";
-        for (const i of alt) {
-          msg += `${tempworkToString(i)}\n`;
+      await dialogs.detailDialog?.open('tempwork', 'edit', tempwork
+        , async (newTempwork: Tempwork) => {
+          const res = await data.update('tempwork', {
+            ...newTempwork,
+            students: [{
+              id: data.getUserId(),
+              name: this.username
+            }]
+          });
+          if (res == true) {
+            this.reloadSchedule();
+            return true;
+          } else {
+            const alt = res as Tempwork[];
+            let msg = "时间冲突，以下是备选时间：\n";
+            for (const i of alt) {
+              msg += `${tempworkToString(i)}\n`;
+            }
+            ElMessageBox.alert(msg, '提醒');
+            return false;
+          }
         }
-        ElMessageBox.alert(msg, '提醒');
-      }
+      );
     },
     async delTempwork(tempwork: Tempwork) {
       await data.del('tempwork', tempwork.id);
@@ -325,6 +415,19 @@ export default {
       this.schedule = await data.getSchedule();
       this.scheduler = new Scheduler(this.schedule, this.now);
     },
+    async requestPath() {
+      if (this.pathType == 'shortest') {
+        this.path = (await data.getShortestPath(this.startLocation, this.endLocation)).path;
+      } else if (this.pathType == 'tsp') {
+        this.path = (await data.getTSP([this.startLocation, ...this.passLocations])).path;
+      }
+    }
+  },
+
+  watch: {
+    startLocation() {
+      this.requestPath();
+    }
   },
 
   async mounted() {

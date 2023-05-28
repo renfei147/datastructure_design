@@ -17,5 +17,5 @@ export function dayToDate(day: Day) {
 }
 
 export function dayToStr(day: Day) {
-    return `${day.month + 1}/${day.day}`;
+    return `${day.month + 1}月${day.day}日`;
 }
