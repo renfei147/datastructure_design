@@ -23,6 +23,8 @@ export interface OfflinePlace {
     detail: string;
 }
 
+export type PlaceInfo = OnlinePlace | OfflinePlace;
+
 export interface Course {
     id: string;
     name: string;
@@ -31,12 +33,12 @@ export interface Course {
     weekday: number;//在周几上课
     startWeek: number;//从第几周开始上课
     endWeek: number;//到第几周结束
-    placeInfo: OnlinePlace | OfflinePlace;
+    placeInfo: PlaceInfo;
     examInfo?: {
         day: Day;
         startTime: number;
         duration: number;
-        placeInfo: OnlinePlace | OfflinePlace;
+        placeInfo: PlaceInfo;
     }
 }
 
@@ -58,7 +60,7 @@ export interface Activity {
         startWeek: number;
         endWeek: number;
     }
-    placeInfo: OnlinePlace | OfflinePlace;
+    placeInfo: PlaceInfo;
 }
 
 export interface Tempwork {
@@ -66,7 +68,7 @@ export interface Tempwork {
     name: string;
     day: Day;
     time: number;//在这一小时内完成
-    placeInfo: OnlinePlace | OfflinePlace;
+    placeInfo: PlaceInfo;
 }
 
 export interface ShortestPath {
@@ -85,26 +87,4 @@ export interface Location {
     name: string;
     address: [number, number];
     connection: number[];
-}
-
-export const localWeekday = ['一', '二', '三', '四', '五', '六', '日'];
-
-export function courseToString(i: Course) {
-    return `第${i.startWeek}周-第${i.endWeek}周 每周${localWeekday[i.weekday]} ${i.startTime}:00-${i.startTime + i.duration}:00`;
-}
-
-export function activityToString(i: Activity) {
-    let s = '';
-    if (i.repeat.type === 'once') {
-        s += dayToStr(i.repeat.day);
-    } else if (i.repeat.type === 'daily') {
-        s += `${dayToStr(i.repeat.startDay)}-${dayToStr(i.repeat.endDay)}`;
-    } else {
-        s += `第${i.repeat.startWeek}周到第${i.repeat.endWeek}周 每周${localWeekday[i.repeat.weekday]}`;
-    }
-    return s + ` ${i.startTime}:00-${i.startTime + 1}:00`;
-}
-
-export function tempworkToString(i: Tempwork) {
-    return `${dayToStr(i.day)} ${i.time}:00`;
 }

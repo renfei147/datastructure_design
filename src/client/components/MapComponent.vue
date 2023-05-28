@@ -1,21 +1,21 @@
 <template>
-  <div>
-    <svg width="1000" height="1408">
-      <image href="public/xtc.jpg" height="100%" width="100%" x="-10" y="-10" />
-      <line v-for="i of lines" :x1="i[0].x" :y1="i[0].y" :x2="i[1].x" :y2="i[1].y" stroke="#33f1ff" stroke-width="2" />
-      <ellipse v-for="i of points" :cx="i.x" :cy="i.y" rx="4" ry="4" fill="#ff3333" @click="clickPoint(i)"/>
-      <!-- <text v-for="i of points" text-anchor="middle" :x="i.x" :y="i.y + 4" font-size="8">{{ i.name }}</text> -->
-    </svg>
-  </div>
+  <svg width="1000" height="1408">
+    <image href="public/xtc.jpg" height="100%" width="100%" x="-10" y="-10" />
+    <path :d="pathText" stroke="#ff3333" stroke-width="2" fill="none"/>
+    <!-- <ellipse v-for="i of points" :cx="i.x" :cy="i.y" rx="4" ry="4" fill="#ff3333" @click="clickPoint(i)" /> -->
+    <!-- <text v-for="i of points" text-anchor="middle" :x="i.x" :y="i.y + 4" font-size="8">{{ i.name }}</text> -->
+  </svg>
 </template>
-
-<style></style>
 
 <script lang="ts">
 import { ElMessageBox } from 'element-plus';
-import mapInfo from '../assets/map.json'
+import { displayLocations, mapInfo } from '../services/map'
+import { PropType } from 'vue';
 
 export default {
+  props: {
+    path: { type: Object as PropType<number[]>, default: [] },
+  },
   data() {
     const points = [], lines = [];
     for (const i of mapInfo) {
@@ -33,11 +33,31 @@ export default {
     }
     return {
       points,
-      lines
+      lines,
+      displayLocations,
+      start: 10
     }
   },
-  methods:{
-    clickPoint(point: typeof this.points[0]){
+
+  computed: {
+    pathText() {
+      let text = '';
+      let first = true;
+      for (const i of this.path) {
+        if (first) {
+          text += 'M ';
+          first = false;
+        } else {
+          text += 'L ';
+        }
+        text += `${this.points[i].x} ${this.points[i].y}`
+      }
+      return text;
+    }
+  },
+
+  methods: {
+    clickPoint(point: typeof this.points[0]) {
       ElMessageBox.alert(`${point.id} ${point.name}`);
     }
   }

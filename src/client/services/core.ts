@@ -1,5 +1,6 @@
 import { dayToDate } from "../../common/day";
 import { Activity, Course, Schedule, Tempwork } from "../../common/definitions";
+import { dialogs } from "./dialogs";
 
 export type Event = { start: number, end: number } & (
   { sourceType: 'course', source: Course } |
@@ -7,9 +8,9 @@ export type Event = { start: number, end: number } & (
   { sourceType: 'tempwork', source: Tempwork }
 )
 
-export interface Alarm {
-  description: string;
-  event?: Event;
+export interface AlarmData {
+  events: Event[];
+  tomorrowEvents: Event[];
 }
 
 const hour = 1000 * 60 * 60;
@@ -96,39 +97,24 @@ export class Scheduler {
   }
 
   advanceNow(now: number) {
-    if (now < this.now) throw new Error("Now is not increasing")
-    const alarms: Alarm[] = [];
+    if (now < this.now) throw new Error("Now is not increasing");
+    const result: AlarmData = {
+      events: [],
+      tomorrowEvents: [],
+    }
     while (this.nextEvent < this.events.length && this.events[this.nextEvent].start - hour <= now) {
-      const source = this.events[this.nextEvent].source;
-      let description = this.events[this.nextEvent].source.name + '将在一小时后开始';
-      if (source.placeInfo.type === 'online') {
-        description += ' 在线链接为' + source.placeInfo.link;
-      } else {
-        description += ' 地点为' + source.placeInfo.id + source.placeInfo.detail;
-      }
-      alarms.push({
-        description,
-        event: this.events[this.nextEvent]
-      });
+      result.events.push(this.events[this.nextEvent]);
       this.nextEvent++;
     }
     if (new Date(this.now).getHours() < 21 && new Date(now).getHours() >= 21) {
       const tmp = new Date(now + day * 2);
       tmp.setHours(0, 0, 0, 0);
       const endOfTomorrow = tmp.getTime();
-      const tomorrowCourseList = [];
       for (let i = this.nextEvent; i < this.events.length && this.events[i].start < endOfTomorrow; i++) {
-        if (this.events[i].sourceType === 'course') {
-          tomorrowCourseList.push(this.events[i].source.name);
-        }
-      }
-      if (tomorrowCourseList.length > 0) {
-        alarms.push({
-          description: '明天的课程有 ' + tomorrowCourseList.join(', ') + ' 请做好准备'
-        });
+        result.tomorrowEvents.push(this.events[i]);
       }
     }
     this.now = now;
-    return alarms;
+    return result;
   }
 }

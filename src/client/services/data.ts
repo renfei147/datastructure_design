@@ -20,6 +20,16 @@ export default {
         return fetch(`/api/shortestPath?start=${start}&end=${end}`).then(res => res.json());
     },
 
+    async getTSP(locations: number[]): Promise<ShortestPath> {
+        return fetch('/api/tsp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ idlist: locations })
+        }).then(res => res.json());
+    },
+
     async add(type: DataType, content: DataContent) {
         const res = await fetch('/api/add' + type, {
             method: 'POST',
