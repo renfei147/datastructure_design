@@ -1,50 +1,5272 @@
-{
-    "1": {
-        "name": "练习喵喵叫",
-        "startTime": 13,
+[
+    {
+        "id": "0",
+        "name": "晨练",
+        "startTime": 6,
         "repeat": {
             "type": "weekly",
-            "weekday": 4,
+            "weekday": 0,
             "startWeek": 1,
-            "endWeek": 10
+            "endWeek": 16
         },
         "placeInfo": {
-            "type": "online",
-            "link": "https://example.com"
+            "type": "offline",
+            "id": 117,
+            "detail": "操场跑道"
         },
-        "students":[
+        "collective": true,
+        "students": [
             {
-                "id": "1",
-                "name": "张三"
-            },
-            {
-                "id": "5",
-                "name": "太阳能rf"
+                "name": "伍一",
+                "id": "1"
             }
         ]
     },
-    "233": {
-        "name": "看rf睡觉",
+    {
+        "id": "1",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 60,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "name": "吃晚饭",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "name": "去教三上自习",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": "301"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "5",
+        "name": "去校医院做志愿",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 106,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "6",
+        "name": "去主楼做实验",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "7",
+        "name": "吃午饭",
+        "startTime": 11,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "8",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 151,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "9",
+        "name": "线上开班会",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.tengxunhuiyi.com/"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "10",
+        "name": "吃午饭",
         "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "11",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "12",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "13",
+        "name": "洗澡",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "14",
+        "name": "洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "15",
+        "name": "打篮球",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 69,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "16",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "17",
+        "name": "创新创业实践课",
+        "startTime": 19,
         "repeat": {
             "type": "weekly",
             "weekday": 4,
             "startWeek": 1,
-            "endWeek": 10
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 32,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "18",
+        "name": "买洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "19",
+        "name": "小组作业",
+        "startTime": 10,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
         },
         "placeInfo": {
             "type": "online",
-            "link": "https://example.com"
+            "link": "https://www.xiaozuzuoye.com/"
         },
-        "students":[
+        "collective": false,
+        "students": [
             {
-                "id": "1",
-                "name": "张三"
-            },
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "20",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
             {
-                "id": "3",
-                "name": "法伍"
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "21",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "22",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "23",
+        "name": "做计组实验",
+        "startTime": 8,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "伍一",
+                "id": "1"
+            }
+        ]
+    },
+    {
+        "id": "24",
+        "name": "晨练",
+        "startTime": 6,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 117,
+            "detail": "操场跑道"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "25",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 60,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "26",
+        "name": "吃晚饭",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "27",
+        "name": "去教三上自习",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": "301"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "29",
+        "name": "去校医院做志愿",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 106,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "30",
+        "name": "去主楼做实验",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "31",
+        "name": "吃午饭",
+        "startTime": 11,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "32",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 151,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "33",
+        "name": "线上开班会",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.tengxunhuiyi.com/"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "34",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "35",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "36",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "37",
+        "name": "洗澡",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "38",
+        "name": "洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "39",
+        "name": "打篮球",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 69,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "40",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "41",
+        "name": "创新创业实践课",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 4,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 32,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "42",
+        "name": "买洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "43",
+        "name": "小组作业",
+        "startTime": 10,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.xiaozuzuoye.com/"
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "44",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "45",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "46",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "47",
+        "name": "做计组实验",
+        "startTime": 8,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "刘二",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "48",
+        "name": "晨练",
+        "startTime": 6,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 117,
+            "detail": "操场跑道"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "49",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 60,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "50",
+        "name": "吃晚饭",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "51",
+        "name": "去教三上自习",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": "301"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "53",
+        "name": "去校医院做志愿",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 106,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "54",
+        "name": "去主楼做实验",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "55",
+        "name": "吃午饭",
+        "startTime": 11,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "56",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 151,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "57",
+        "name": "线上开班会",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.tengxunhuiyi.com/"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "58",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "59",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "60",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "61",
+        "name": "洗澡",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "62",
+        "name": "洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "63",
+        "name": "打篮球",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 69,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "64",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "65",
+        "name": "创新创业实践课",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 4,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 32,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "66",
+        "name": "买洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "67",
+        "name": "小组作业",
+        "startTime": 10,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.xiaozuzuoye.com/"
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "68",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "69",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "70",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "71",
+        "name": "做计组实验",
+        "startTime": 8,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "张三",
+                "id": "3"
+            }
+        ]
+    },
+    {
+        "id": "72",
+        "name": "晨练",
+        "startTime": 6,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 117,
+            "detail": "操场跑道"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "73",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 60,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "74",
+        "name": "吃晚饭",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "75",
+        "name": "去教三上自习",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": "301"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "77",
+        "name": "去校医院做志愿",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 106,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "78",
+        "name": "去主楼做实验",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "79",
+        "name": "吃午饭",
+        "startTime": 11,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "80",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 151,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "81",
+        "name": "线上开班会",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.tengxunhuiyi.com/"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "82",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "83",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "84",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "85",
+        "name": "洗澡",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "86",
+        "name": "洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "87",
+        "name": "打篮球",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 69,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "88",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "89",
+        "name": "创新创业实践课",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 4,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 32,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "90",
+        "name": "买洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "91",
+        "name": "小组作业",
+        "startTime": 10,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.xiaozuzuoye.com/"
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "92",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "93",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "94",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "95",
+        "name": "做计组实验",
+        "startTime": 8,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "李四",
+                "id": "4"
+            }
+        ]
+    },
+    {
+        "id": "96",
+        "name": "晨练",
+        "startTime": 6,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 117,
+            "detail": "操场跑道"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "97",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 60,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "98",
+        "name": "吃晚饭",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "99",
+        "name": "去教三上自习",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": "301"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "101",
+        "name": "去校医院做志愿",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 106,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "102",
+        "name": "去主楼做实验",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "103",
+        "name": "吃午饭",
+        "startTime": 11,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "104",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 151,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "105",
+        "name": "线上开班会",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.tengxunhuiyi.com/"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "106",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "107",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "108",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "109",
+        "name": "洗澡",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "110",
+        "name": "洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "111",
+        "name": "打篮球",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 69,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "112",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "113",
+        "name": "创新创业实践课",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 4,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 32,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "114",
+        "name": "买洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "115",
+        "name": "小组作业",
+        "startTime": 10,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.xiaozuzuoye.com/"
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "116",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "117",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "118",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "119",
+        "name": "做计组实验",
+        "startTime": 8,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "法五",
+                "id": "5"
+            }
+        ]
+    },
+    {
+        "id": "120",
+        "name": "晨练",
+        "startTime": 6,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 117,
+            "detail": "操场跑道"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "121",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 60,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "122",
+        "name": "吃晚饭",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "123",
+        "name": "去教三上自习",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": "301"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "125",
+        "name": "去校医院做志愿",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 106,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "126",
+        "name": "去主楼做实验",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "127",
+        "name": "吃午饭",
+        "startTime": 11,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "128",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 151,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "129",
+        "name": "线上开班会",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.tengxunhuiyi.com/"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "130",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "131",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "132",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "133",
+        "name": "洗澡",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "134",
+        "name": "洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "135",
+        "name": "打篮球",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 69,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "136",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "137",
+        "name": "创新创业实践课",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 4,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 32,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "138",
+        "name": "买洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "139",
+        "name": "小组作业",
+        "startTime": 10,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.xiaozuzuoye.com/"
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "140",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "141",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "142",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "143",
+        "name": "做计组实验",
+        "startTime": 8,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "王六",
+                "id": "6"
+            }
+        ]
+    },
+    {
+        "id": "144",
+        "name": "晨练",
+        "startTime": 6,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 117,
+            "detail": "操场跑道"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "145",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 60,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "146",
+        "name": "吃晚饭",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "147",
+        "name": "去教三上自习",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": "301"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "149",
+        "name": "去校医院做志愿",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 106,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "150",
+        "name": "去主楼做实验",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "151",
+        "name": "吃午饭",
+        "startTime": 11,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "152",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 151,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "153",
+        "name": "线上开班会",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.tengxunhuiyi.com/"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "154",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "155",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "156",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "157",
+        "name": "洗澡",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "158",
+        "name": "洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "159",
+        "name": "打篮球",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 69,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "160",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "161",
+        "name": "创新创业实践课",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 4,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 32,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "162",
+        "name": "买洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "163",
+        "name": "小组作业",
+        "startTime": 10,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.xiaozuzuoye.com/"
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "164",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "165",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "166",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "167",
+        "name": "做计组实验",
+        "startTime": 8,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "赵七",
+                "id": "7"
+            }
+        ]
+    },
+    {
+        "id": "168",
+        "name": "晨练",
+        "startTime": 6,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 117,
+            "detail": "操场跑道"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "169",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 60,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "170",
+        "name": "吃晚饭",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "171",
+        "name": "去教三上自习",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": "301"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "173",
+        "name": "去校医院做志愿",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 106,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "174",
+        "name": "去主楼做实验",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "175",
+        "name": "吃午饭",
+        "startTime": 11,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "176",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 151,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "177",
+        "name": "线上开班会",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.tengxunhuiyi.com/"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "178",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "179",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "180",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "181",
+        "name": "洗澡",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "182",
+        "name": "洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "183",
+        "name": "打篮球",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 69,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "184",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "185",
+        "name": "创新创业实践课",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 4,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 32,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "186",
+        "name": "买洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "187",
+        "name": "小组作业",
+        "startTime": 10,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.xiaozuzuoye.com/"
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "188",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "189",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "190",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "191",
+        "name": "做计组实验",
+        "startTime": 8,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "孙八",
+                "id": "8"
+            }
+        ]
+    },
+    {
+        "id": "192",
+        "name": "晨练",
+        "startTime": 6,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 117,
+            "detail": "操场跑道"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "193",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 60,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "194",
+        "name": "吃晚饭",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "195",
+        "name": "去教三上自习",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": "301"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "197",
+        "name": "去校医院做志愿",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 106,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "198",
+        "name": "去主楼做实验",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "199",
+        "name": "吃午饭",
+        "startTime": 11,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "200",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 151,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "201",
+        "name": "线上开班会",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.tengxunhuiyi.com/"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "202",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "203",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "204",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "205",
+        "name": "洗澡",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "206",
+        "name": "洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "207",
+        "name": "打篮球",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 69,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "208",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "209",
+        "name": "创新创业实践课",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 4,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 32,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "210",
+        "name": "买洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "211",
+        "name": "小组作业",
+        "startTime": 10,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.xiaozuzuoye.com/"
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "212",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "213",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "214",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "215",
+        "name": "做计组实验",
+        "startTime": 8,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "周九",
+                "id": "9"
+            }
+        ]
+    },
+    {
+        "id": "216",
+        "name": "晨练",
+        "startTime": 6,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 117,
+            "detail": "操场跑道"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "217",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 60,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "218",
+        "name": "吃晚饭",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "219",
+        "name": "去教三上自习",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 0,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": "301"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "221",
+        "name": "去校医院做志愿",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 106,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "222",
+        "name": "去主楼做实验",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "223",
+        "name": "吃午饭",
+        "startTime": 11,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "224",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 1,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 151,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "225",
+        "name": "线上开班会",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.tengxunhuiyi.com/"
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "226",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "227",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "228",
+        "name": "吃早饭",
+        "startTime": 7,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "229",
+        "name": "洗澡",
+        "startTime": 21,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 2,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "230",
+        "name": "洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "231",
+        "name": "打篮球",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 69,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "232",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "233",
+        "name": "创新创业实践课",
+        "startTime": 19,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 4,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 32,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "234",
+        "name": "买洗澡",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 3,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 28,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "235",
+        "name": "小组作业",
+        "startTime": 10,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://www.xiaozuzuoye.com/"
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "236",
+        "name": "吃午饭",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 150,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "237",
+        "name": "去教三自习",
+        "startTime": 20,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 5,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 154,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "238",
+        "name": "吃晚饭",
+        "startTime": 18,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 45,
+            "detail": ""
+        },
+        "collective": false,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
+            }
+        ]
+    },
+    {
+        "id": "239",
+        "name": "做计组实验",
+        "startTime": 8,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 6,
+            "startWeek": 1,
+            "endWeek": 16
+        },
+        "placeInfo": {
+            "type": "offline",
+            "id": 103,
+            "detail": ""
+        },
+        "collective": true,
+        "students": [
+            {
+                "name": "吴十",
+                "id": "10"
             }
         ]
     }
-}
+]

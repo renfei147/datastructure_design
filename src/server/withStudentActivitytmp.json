@@ -1,0 +1,50 @@
+{
+    "1": {
+        "name": "练习喵喵叫",
+        "startTime": 13,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 4,
+            "startWeek": 1,
+            "endWeek": 10
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://example.com"
+        },
+        "students":[
+            {
+                "id": "1",
+                "name": "张三"
+            },
+            {
+                "id": "5",
+                "name": "太阳能rf"
+            }
+        ]
+    },
+    "233": {
+        "name": "看rf睡觉",
+        "startTime": 12,
+        "repeat": {
+            "type": "weekly",
+            "weekday": 4,
+            "startWeek": 1,
+            "endWeek": 10
+        },
+        "placeInfo": {
+            "type": "online",
+            "link": "https://example.com"
+        },
+        "students":[
+            {
+                "id": "1",
+                "name": "张三"
+            },
+            {
+                "id": "3",
+                "name": "法伍"
+            }
+        ]
+    }
+}
