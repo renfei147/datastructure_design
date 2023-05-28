@@ -118,7 +118,7 @@ export class HashTable<T = any>{
         //找不到返回未定义
         return undefined;
     }
-    // To convert the hash table to JSON format, we can define a method called toJSON() that will return a JSON string representation of the hash table.
+    
 
     public toJSON(): string {
         const jsonObj = {} as any;

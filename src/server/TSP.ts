@@ -55,11 +55,13 @@ function getAns(nodeSet:Location[],martix:number[][]):number{
 }
 function SA(nodeSet:Location[],martix: number[][]):number{
     let ans:number = getAns(nodeSet,martix);
-    let ansNodeSet:Location[] = nodeSet;
+    let ansNodeSet:Location[] = nodeSet; 
+    let n= nodeSet.length;
     let temperature:number = BeginTemperature;
     for(;temperature>EndTemperature;temperature*=DecreaseRate){
         let i:number = Math.floor(Math.random()*(nodeSet.length-1))+1;
         let j:number = Math.floor(Math.random()*(nodeSet.length-1))+1;
+    while(i==n-1||j==n-1||i==j) { i=Math.floor(Math.random()*(nodeSet.length-1))+1;j=Math.floor(Math.random()*(nodeSet.length-1))+1;}
         let temp:Location = nodeSet[i];
         nodeSet[i] = nodeSet[j];
         nodeSet[j] = temp;
