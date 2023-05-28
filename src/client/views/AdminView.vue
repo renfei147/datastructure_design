@@ -56,7 +56,8 @@
 }
 </style>
 <script lang="ts">
-import { Course } from '../../common/definitions'
+import { ElMessageBox } from 'element-plus';
+import { Course, courseToString } from '../../common/definitions'
 import data from '../services/data';
 import { dialogs } from '../services/dialogs';
 import { Plus } from '@element-plus/icons-vue'
@@ -71,12 +72,11 @@ export default {
   },
   computed: {
     tableData() {
-      const localWeekday = ['一', '二', '三', '四', '五', '六', '日'];
       return this.courses.map(i => ({
         source: i,
         id: i.id,
         name: i.name,
-        time: `第${i.startWeek}周-第${i.endWeek}周 每周${localWeekday[i.weekday]} ${i.startTime}:00-${i.startTime + i.duration}:00`,
+        time: courseToString(i),
         place: i.placeInfo.type === 'online'
           ? `线上 ${i.placeInfo.link}`
           : `${i.placeInfo.id}${i.placeInfo.detail}`,
@@ -100,22 +100,40 @@ export default {
     },
     async addCourse() {
       const newCourse = await dialogs.detailDialog?.open('course', 'new') as Course;
-      await data.addCourse({
+      const res = await data.add('course', {
         ...newCourse,
         students: await data.getUsers()
       });
-      this.reload();
+      if (res == true) {
+        this.reload();
+      } else {
+        const alt = res as Course[];
+        let msg = "时间冲突，以下是备选时间：\n";
+        for (const i of alt) {
+          msg += `${courseToString(i)}\n`;
+        }
+        ElMessageBox.alert(msg, '提醒');
+      }
     },
     async editCourse(course: Course) {
       const newCourse = await dialogs.detailDialog?.open('course', 'edit', course) as Course;
-      await data.updateCourse({
+      const res = await data.update('course', {
         ...newCourse,
         students: await data.getUsers()
       });
-      this.reload();
+      if (res == true) {
+        this.reload();
+      } else {
+        const alt = res as Course[];
+        let msg = "时间冲突，以下是备选时间：\n";
+        for (const i of alt) {
+          msg += `${courseToString(i)}\n`;
+        }
+        ElMessageBox.alert(msg, '提醒');
+      }
     },
     async delCourse(id: string) {
-      await data.delCourse(id);
+      await data.del('course', id);
       this.reload();
     }
   }

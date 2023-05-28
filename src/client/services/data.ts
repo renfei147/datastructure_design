@@ -1,7 +1,10 @@
 import { Schedule, User, ShortestPath, Activity, Tempwork, Course } from "../../common/definitions";
 
+type DataType = 'course' | 'activity' | 'tempwork';
+type DataContent = (Course | Activity | Tempwork) & { students: User[] };
 export default {
     currentUser: null as User | null,
+
     async getUsers(): Promise<User[]> {
         return fetch('/api/users').then(res => res.json());
     },
@@ -12,113 +15,49 @@ export default {
     async getSchedule(): Promise<Schedule> {
         return fetch(`/api/schedule?id=${this.getUserId()}`).then(res => res.json());
     },
+
     async getShortestPath(start: number, end: number): Promise<ShortestPath> {
         return fetch(`/api/shortestPath?start=${start}&end=${end}`).then(res => res.json());
     },
-    async addCourse(course: Course & { students: User[] }) {
-        await fetch('/api/addcourse', {
+
+    async add(type: DataType, content: DataContent) {
+        const res = await fetch('/api/add' + type, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                command: "add",
-                msg: course
+                command: 'add',
+                msg: content
             })
         })
+        const data = await res.text();
+        if (data == 'success') return true;
+        return JSON.parse(data) as DataContent[];
     },
-    async updateCourse(course: Course & { students: User[] }) {
-        await fetch('/api/updcourse', {
+    async update(type: DataType, content: DataContent) {
+        const res = await fetch('/api/upd' + type, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                command: "upd",
-                msg: course
+                command: 'upd',
+                msg: content
             })
         })
+        const data = await res.text();
+        if (data == 'success') return true;
+        return JSON.parse(data) as DataContent[];
     },
-    async delCourse(id: string) {
-        await fetch('/api/delcourse', {
+    async del(type: DataType, id: string) {
+        await fetch('/api/del' + type, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                command: "del",
-                msg: id
-            })
-        })
-    },
-    async addActivity(activity: Activity & { students: User[] }) {
-        await fetch('/api/addactivity', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                command: "add",
-                msg: activity
-            })
-        })
-    },
-    async updateActivity(activity: Activity & { students: User[] }) {
-        await fetch('/api/updactivity', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                command: "upd",
-                msg: activity
-            })
-        })
-    },
-    async delActivity(id: string) {
-        await fetch('/api/delactivity', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                command: "del",
-                msg: id
-            })
-        })
-    },
-    async addTempwork(tempwork: Tempwork & { students: User[] }) {
-        await fetch('/api/addtempwork', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                command: "add",
-                msg: tempwork
-            })
-        })
-    },
-    async updateTempwork(tempwork: Tempwork & { students: User[] }) {
-        await fetch('/api/updtempwork', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                command: "upd",
-                msg: tempwork
-            })
-        })
-    },
-    async delTempwork(id: string) {
-        await fetch('/api/deltempwork', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                command: "del",
+                command: 'del',
                 msg: id
             })
         })

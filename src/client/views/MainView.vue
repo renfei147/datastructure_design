@@ -128,8 +128,7 @@ import MapComponent from '../components/MapComponent.vue'
 import { Alarm, Scheduler } from '../services/core';
 import data from '../services/data';
 import { User, Clock, Search, Plus } from '@element-plus/icons-vue'
-import { Activity, Schedule, Tempwork } from '../../common/definitions';
-import { dayToStr } from '../../common/day';
+import { Activity, Schedule, Tempwork, activityToString, tempworkToString } from '../../common/definitions';
 import { dialogs } from '../services/dialogs'
 
 export default {
@@ -160,13 +159,12 @@ export default {
     tableData() {
       if (!this.schedule) return [];
       const result = [];
-      const localWeekday = ['一', '二', '三', '四', '五', '六', '日'];
       for (const i of this.schedule.tempworks) {
         result.push({
           source: i,
           type: '临时事务',
           name: i.name,
-          time: `${dayToStr(i.day)} ${i.time}:00`,
+          time: tempworkToString(i),
           place: i.placeInfo.type === 'online'
             ? `线上 ${i.placeInfo.link}`
             : `${i.placeInfo.id}${i.placeInfo.detail}`,
@@ -177,12 +175,7 @@ export default {
           source: i,
           type: '课外活动',
           name: i.name,
-          time: (i.repeat.type === 'once'
-            ? dayToStr(i.repeat.day)
-            : i.repeat.type === 'daily'
-              ? `${dayToStr(i.repeat.startDay)}-${dayToStr(i.repeat.endDay)}`
-              : `第${i.repeat.startWeek}周到第${i.repeat.endWeek}周 每周${localWeekday[i.repeat.weekday]}`)
-            + ' ' + `${i.startTime}:00-${i.startTime + 1}:00`,
+          time: activityToString(i),
           place: i.placeInfo.type === 'online'
             ? `线上 ${i.placeInfo.link}`
             : `${i.placeInfo.id}${i.placeInfo.detail}`,
@@ -242,54 +235,90 @@ export default {
     },
     async addActivity() {
       const newActivity = await dialogs.detailDialog?.open('activity', 'new') as Activity;
-      await data.addActivity({
+      const res = await data.add('activity', {
         ...newActivity,
         students: [{
           id: data.getUserId(),
           name: this.username
         }]
       });
-      this.reloadSchedule();
+      if (res == true) {
+        this.reloadSchedule();
+      } else {
+        const alt = res as Activity[];
+        let msg = "时间冲突，以下是备选时间：\n";
+        for (const i of alt) {
+          msg += `${activityToString(i)}\n`;
+        }
+        ElMessageBox.alert(msg, '提醒');
+      }
     },
     async editActivity(activity: Activity) {
       const newActivity = await dialogs.detailDialog?.open('activity', 'edit', activity) as Activity;
-      await data.updateActivity({
+      const res = await data.update('activity', {
         ...newActivity,
         students: [{
           id: data.getUserId(),
           name: this.username
         }]
       });
-      this.reloadSchedule();
+      if (res == true) {
+        this.reloadSchedule();
+      } else {
+        const alt = res as Activity[];
+        let msg = "时间冲突，以下是备选时间：\n";
+        for (const i of alt) {
+          msg += `${activityToString(i)}\n`;
+        }
+        ElMessageBox.alert(msg, '提醒');
+      }
     },
     async delActivity(activity: Activity) {
-      await data.delActivity(activity.id);
+      await data.del('activity', activity.id);
       this.reloadSchedule();
     },
     async addTempwork() {
       const newTempwork = await dialogs.detailDialog?.open('tempwork', 'new') as Tempwork;
-      await data.addTempwork({
+      const res = await data.add('tempwork', {
         ...newTempwork,
         students: [{
           id: data.getUserId(),
           name: this.username
         }]
       });
-      this.reloadSchedule();
+      if (res == true) {
+        this.reloadSchedule();
+      } else {
+        const alt = res as Tempwork[];
+        let msg = "时间冲突，以下是备选时间：\n";
+        for (const i of alt) {
+          msg += `${tempworkToString(i)}\n`;
+        }
+        ElMessageBox.alert(msg, '提醒');
+      }
     },
     async editTempwork(tempwork: Tempwork) {
       const newTempwork = await dialogs.detailDialog?.open('tempwork', 'edit', tempwork) as Tempwork;
-      await data.updateTempwork({
+      const res = await data.update('tempwork', {
         ...newTempwork,
         students: [{
           id: data.getUserId(),
           name: this.username
         }]
       });
-      this.reloadSchedule();
+      if (res == true) {
+        this.reloadSchedule();
+      } else {
+        const alt = res as Tempwork[];
+        let msg = "时间冲突，以下是备选时间：\n";
+        for (const i of alt) {
+          msg += `${tempworkToString(i)}\n`;
+        }
+        ElMessageBox.alert(msg, '提醒');
+      }
     },
     async delTempwork(tempwork: Tempwork) {
-      await data.delTempwork(tempwork.id);
+      await data.del('tempwork', tempwork.id);
       this.reloadSchedule();
     },
     async reloadSchedule() {

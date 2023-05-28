@@ -111,7 +111,7 @@
         "id":18,
         "name":"门口",
         "address":[820,250],
-        "connection":[17]
+        "connection":[17,19]
     },
     {
         "id":19,
@@ -604,13 +604,13 @@
         "id":100,
         "name":"教二西门",
         "address":[450,950],
-        "connection":[99,154]
+        "connection":[99,154,155]
     },
     {
         "id":101,
         "name":"教二北门",
         "address":[540,930],
-        "connection":[95,102,104]
+        "connection":[95,102,104,155]
     },
     {
         "id":102,
