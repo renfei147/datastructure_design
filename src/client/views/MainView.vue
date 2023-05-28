@@ -62,7 +62,7 @@
         </template>
       </el-input>
     </div>
-    <el-table :data="filterTableData" stripe>
+    <el-table :data="filteredTableData" stripe>
       <el-table-column prop="type" label="类型" width="100" sortable />
       <el-table-column prop="name" label="名称" sortable />
       <el-table-column prop="time" label="时间" width="250" sortable />
@@ -232,7 +232,7 @@ export default {
       }
       return result;
     },
-    filterTableData() {
+    filteredTableData() {
       return this.tableData.filter(
         (data) =>
           !this.searchInput ||
