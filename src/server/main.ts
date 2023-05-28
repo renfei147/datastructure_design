@@ -141,6 +141,14 @@ fse.readJSON("src/server/withStudentTempwork.json").then((data) => {
 /*以下为基础操作*/
 app.use(express.json())
 
+app.get("/api/log",(req,res)=>{
+  res.send({
+    log_activity:com_withStudentsActivity,
+    log_tempwork:com_withStudentsTempwork,
+    log_course:com_withStudentsCourse
+  })
+});
+
 app.get("/api/users", (_, res) => {
   res.send(users);
 });
@@ -266,8 +274,51 @@ app.post("/api/delcourse", (req, res) => {
 
 app.post("/api/updcourse", (req, res) => {
   let body = req.body;
-  let course = body.msg;
+  let course:Course&{students:User[]} = body.msg;
   if (course.id in withStudentsCourse) {
+  let oldCourse = JSON.parse(JSON.stringify(withStudentsCourse[course.id]));
+  delete withStudentsCourse[course.id];
+  inDealingTempwork =inDealingActivity= true;
+  structSchedule("-1");//强制算一遍没有tempwork和activity的time_interval_list
+  //不对，应该用一个可以返回所有课程的函数，这个函数构造的schedule是所有的course，产生的time_interval_list是所有的course的time_interval_list
+  inDealingTempwork =inDealingActivity= false;
+  let proposedTimeIntervals = [];
+  let alternativeTimeIntervals = [];
+  for (let i = course.startWeek; i <= course.endWeek; i++) {
+    proposedTimeIntervals.push(TimeStampConvertToTimeInterval(dayToDate(schedule.firstDay).getTime() + i * 7 * 24 * 3600 * 1000 + course.weekday * 24 * 3600 * 1000 + course.startTime * 3600 * 1000, course.duration));
+  }
+  // proposedTimeIntervals.push(convertToTimeInterval(course.day, course.time, course.duration));
+  console.log(proposedTimeIntervals);
+  if (isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals])) {
+    let i;
+    for (i = 1; alternativeTimeIntervals.length <= 3; i++) {
+      // let alternativeTimeInterval = convertToTimeInterval(course.day, course.time + i, 1);
+      let alternativeTimeInterval = [];
+      for (let TimeIntervalCount = 0; TimeIntervalCount < proposedTimeIntervals.length; TimeIntervalCount++) 
+        alternativeTimeInterval.push({ start: proposedTimeIntervals[TimeIntervalCount].start + 3600 * 1000 * i, end: proposedTimeIntervals[TimeIntervalCount].end + 3600 * 1000 * i });
+      if (!isTimeIntervalCollision([...time_interval_list, ...alternativeTimeInterval])) {
+        let newDay = new Date(alternativeTimeInterval[0].start);
+        let newCourse = { ...course };
+        newCourse.weekday = newDay.getDay() - 1;//这个方法返回一周中的第几天
+        if (newCourse.weekday == -1) newCourse.weekday = 6;//这是为了让周一变成0，周日变成6
+        newCourse.startTime = newDay.getHours();
+        alternativeTimeIntervals.push(newCourse);
+      }
+    }
+    withStudentsCourse[course.id] = oldCourse;
+    return res.send(alternativeTimeIntervals);
+    // return dealAlternativeSend(alternativeTimeIntervals,i,course,res);
+  }
+  else {
+    for(const student of course.students){
+    structSchedule(student.id);//强制算一遍有tempwork和course的time_interval_list
+    if (!isTimeIntervalCollision([...time_interval_list, ...proposedTimeIntervals]))
+      time_interval_list.push(...proposedTimeIntervals);
+    }
+  }
+
+
+
     withStudentsCourse[course.id] = course;
     com_withStudentsCourse[Object.keys(com_withStudentsCourse).length + 1] = body;
     res.send("success");
@@ -681,6 +732,7 @@ function structSchedule(id: String): Schedule {
 
   if(id=="-1"){
     for(const[key,value]of Object.entries(withStudentsCourse)){
+      value["id"] = key;
       mySchedule.courses.push(value);
 
       for (let i = value.startWeek; i <= value.endWeek; i++){
