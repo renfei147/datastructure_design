@@ -12,13 +12,13 @@
     </div>
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column prop="id" label="编号" width="100" sortable />
-      <el-table-column prop="name" label="名称" width="150" sortable />
-      <el-table-column prop="time" label="上课时间" sortable />
-      <el-table-column prop="place" label="上课地点" sortable />
-      <el-table-column prop="exam" label="考试" sortable />
-      <el-table-column fixed="right" label="操作" width="120">
+      <el-table-column prop="name" label="名称" sortable />
+      <el-table-column prop="time" label="上课时间" width="250" sortable />
+      <el-table-column prop="place" label="上课地点" width="250" sortable />
+      <el-table-column prop="exam" label="考试" width="250" sortable />
+      <el-table-column fixed="right" label="操作" width="180">
         <template #default="scope">
-          <el-button link type="primary" @click="editStudents(scope.row.source)">选择上课学生</el-button>
+          <el-button link type="primary" @click="editStudents(scope.row.source)">选择学生</el-button>
           <el-button link type="primary" @click="editCourse(scope.row.source)">编辑</el-button>
           <el-button link type="danger" @click="delCourse(scope.row.source)">删除</el-button>
         </template>
@@ -28,7 +28,7 @@
 </template>
 <style scoped>
 .container {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
 }
 
@@ -58,7 +58,7 @@
 </style>
 <script lang="ts">
 import { ElMessageBox } from 'element-plus';
-import { Course } from '../../common/definitions'
+import { Course, User } from '../../common/definitions'
 import { courseToString, placeToStr } from '../services/format'
 import data from '../services/data';
 import { dialogs } from '../services/dialogs';
@@ -70,7 +70,7 @@ export default {
   },
   data() {
     return {
-      courses: [] as (Course & { students: number[] })[]
+      courses: [] as (Course & { students: User[] })[]
     }
   },
   computed: {
@@ -122,25 +122,26 @@ export default {
         });
     },
 
-    editStudents(course: Course & { students: number[] }) {
-      dialogs.studentListDialog?.open(course.students, async (selected: number[]) => {
-        const res = await data.update('course', {
-          ...course,
-          students: selected.map(i => ({ id: i.toString(), name: '' }))
-        });
-        if (res == true) {
-          this.reload();
-          return true;
-        } else {
-          const alt = res as Course[];
-          let msg = "时间冲突，以下是备选时间：\n";
-          for (const i of alt) {
-            msg += `${courseToString(i)}\n`;
+    editStudents(course: Course & { students: User[] }) {
+      dialogs.studentListDialog?.open(course.students.map(i => i.id),
+        async (selected: string[]) => {
+          const res = await data.update('course', {
+            ...course,
+            students: selected.map(i => ({ id: i, name: '' }))
+          });
+          if (res == true) {
+            this.reload();
+            return true;
+          } else {
+            const alt = res as Course[];
+            let msg = "时间冲突，以下是备选时间：\n";
+            for (const i of alt) {
+              msg += `${courseToString(i)}\n`;
+            }
+            ElMessageBox.alert(msg, '提醒');
+            return false;
           }
-          ElMessageBox.alert(msg, '提醒');
-          return false;
-        }
-      })
+        })
     },
 
     editCourse(course: Course) {

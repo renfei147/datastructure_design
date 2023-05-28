@@ -279,6 +279,7 @@ export default {
           if (alarm.events[0].source.placeInfo.type == 'offline') {
             this.pathType = 'shortest';
             this.endLocation = alarm.events[0].source.placeInfo.id;
+            this.requestPath();
           }
         } else {
           const locations = [];
@@ -290,6 +291,7 @@ export default {
           if (locations.length > 0) {
             this.pathType = 'tsp';
             this.passLocations = locations;
+            this.requestPath();
           }
         }
       }

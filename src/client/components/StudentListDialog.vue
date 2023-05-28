@@ -1,39 +1,43 @@
 <template>
-  <el-dialog v-model="visible" title="选课学生列表">
-    <el-scrollbar height="400px">
-      <el-checkbox-group v-model="selected">
-        <el-checkbox v-for="i in students" :key="i.id" :label="i.name">
-          {{ i.name }}
-        </el-checkbox>
-      </el-checkbox-group>
-    </el-scrollbar>
+  <el-dialog v-model="visible" title="编辑选课学生">
+    <div class="container">
+      <el-transfer v-model="selected" :data="students" :titles="['未选课学生', '已选课学生']" filterable />
+    </div>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="visible = false">取消</el-button>
-        <el-button type="primary" @click="confirm">
-          确认
-        </el-button>
+        <el-button type="primary" @click="confirm">确认</el-button>
       </span>
     </template>
   </el-dialog>
 </template>
-<style scoped></style>
+<style scoped>
+.container {
+  text-align: center;
+}
+</style>
 <script lang="ts">
-import { User } from '../../common/definitions';
 import data from '../services/data';
 import { dialogs } from '../services/dialogs';
+
+interface Option {
+  key: string
+  label: string
+  disabled: boolean
+}
 
 export default {
   data() {
     return {
       visible: false,
-      students: [] as User[],
-      selected: [] as number[],
-      callback: null as (null | ((res: number[]) => Promise<boolean>)),
+      students: [] as Option[],
+      selected: [] as string[],
+      callback: null as (null | ((res: string[]) => Promise<boolean>)),
     }
   },
   methods: {
-    open(selected: number[], callback: (res: number[]) => Promise<boolean>) {
+    open(selected: string[], callback: (res: string[]) => Promise<boolean>) {
+      this.visible = true;
       this.selected = selected;
       this.callback = callback;
     },
@@ -43,7 +47,11 @@ export default {
   },
   async mounted() {
     dialogs.studentListDialog = this;
-    this.students = await data.getUsers();
+    this.students = (await data.getUsers()).map(i => ({
+      key: i.id,
+      label: i.name,
+      disabled: false,
+    }));
   },
 }
 </script>
