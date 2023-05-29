@@ -20,10 +20,10 @@
 
       <el-form-item label="上课日期" v-if="type === 'course'">
         从第
-        <el-input-number v-model="formData.startWeek" controls-position="right" :min="1" :max="12"
+        <el-input-number v-model="formData.startWeek" controls-position="right" :min="1" :max="18"
           style="width:80px;margin:0 10px;" />
         周到第
-        <el-input-number v-model="formData.endWeek" controls-position="right" :min="1" :max="12"
+        <el-input-number v-model="formData.endWeek" controls-position="right" :min="1" :max="18"
           style="width:80px;margin:0 10px;" />
         周
         <el-select v-model="formData.weekday" style="width:100px; margin:0 10px;">
@@ -119,7 +119,7 @@
           <el-input v-model="formData.exam.placeDetail" style="width:150px;" placeholder="备注（如教室号）" />
         </el-form-item>
         <el-form-item label="考试链接" v-if="formData.exam.placeType == 'online'">
-          <el-input v-model="formData.exam.placeLink" />
+          <el-input v-model="formData.exam.placeLink" style="width:400px;" />
         </el-form-item>
       </template>
     </el-form>

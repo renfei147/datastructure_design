@@ -43,7 +43,7 @@ export default {
         })
         const data = await res.text();
         if (data == 'success') {
-            fetch('/api/savechanges');
+            // fetch('/api/savechanges');
             return true;
         }
         return JSON.parse(data) as DataContent[];
@@ -61,7 +61,7 @@ export default {
         })
         const data = await res.text();
         if (data == 'success') {
-            fetch('/api/savechanges');
+            // fetch('/api/savechanges');
             return true;
         }
         return JSON.parse(data) as DataContent[];

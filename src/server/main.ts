@@ -147,6 +147,9 @@ fse.readJSON("src/server/withStudentTempwork.json").then((data) => {
 /*以下为基础操作*/
 app.use(express.json())
 
+// 静态页面
+app.use(express.static("dist/"));
+
 app.get("/api/log",(req,res)=>{
   res.send(JSON.stringify(mylist));
 });

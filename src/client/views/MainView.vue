@@ -35,7 +35,7 @@
         </el-icon>
       </template>
     </el-input>
-    <el-table :data="filteredCourseTableData" stripe style="width: 100%">
+    <el-table :data="courseTableData" stripe style="width: 100%">
       <el-table-column prop="id" label="编号" width="100" sortable />
       <el-table-column prop="name" label="名称" sortable />
       <el-table-column prop="time" label="上课时间" width="250" sortable />
@@ -69,7 +69,7 @@
         </template>
       </el-input>
     </div>
-    <el-table :data="filteredTableData" stripe>
+    <el-table :data="pagedTableData" stripe>
       <el-table-column prop="type" label="类型" width="100" sortable />
       <el-table-column prop="name" label="名称" sortable />
       <el-table-column prop="time" label="时间" width="250" sortable />
@@ -87,6 +87,10 @@
         </template>
       </el-table-column>
     </el-table>
+    <div style="text-align: center;">
+      <el-pagination layout="prev, pager, next" v-model:currentPage="currentPage" :total="filteredTableData.length"
+        :page-size="15" />
+    </div>
   </div>
   <div v-else class="container">
     <div v-if="pathType != 'none'">
@@ -194,7 +198,8 @@ export default {
       startLocation: 54,
       endLocation: 0,
       passLocations: [] as number[],
-      path: [] as number[]
+      path: [] as number[],
+      currentPage: 1
     }
   },
   computed: {
@@ -211,7 +216,7 @@ export default {
           : '未安排'
       }))
     },
-    filteredCourseTableData(){
+    filteredCourseTableData() {
       return this.courseTableData.filter(
         (data) =>
           !this.courseSearchInput ||
@@ -247,6 +252,9 @@ export default {
           !this.searchInput ||
           data.name.toLowerCase().includes(this.searchInput.toLowerCase())
       )
+    },
+    pagedTableData() {
+      return this.filteredTableData.slice((this.currentPage - 1) * 15, this.currentPage * 15);
     },
     endOrPassLocationsText() {
       if (this.pathType == 'shortest') {
